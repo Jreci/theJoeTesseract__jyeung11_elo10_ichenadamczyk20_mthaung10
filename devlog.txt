@@ -1,0 +1,49 @@
+Team theJoeTesseract -- Devlog:
+--------------------------------------------------------------
+
+ericL -- 2021-05-26 20:25
+    - started modifying existing db code for new tables
+    - modified getUserInfo, added addScore, showHighScores
+   	- deleted userID column in user table because we felt it would be simpler to have less 
+      columns, now username is the unique identifier
+
+jessicaY -- 2021-05-26 21:31
+    - added modal for login and register, split by columns
+        - heading, footer
+        - username, pw, and submit forms
+
+--------------------------------------------------------------
+
+ericL -- 2021-05-27 21:30
+    - fixed the scores column bug (literally took me an hour and a half for this one thing lol)
+    - learned that sqlite is in fact not built for conditionally inserting stuff into tables
+
+ianC -- 2021-05-27 21:30
+    - implemented inputs
+    - implemented background music
+    - implemented point-in-a-polygon test
+
+michelleT -- 2021-05-27 21:30
+	- Bootstrap/CSS for login/registration forms
+
+ericL, ianC -- 2021-05-27 22:00
+    - commented ian's gaming code for easy future understanding
+
+jessicaY -- 2021-05-27 22:10
+    - worked on long and painful process of logging in and out and registration on the same page
+ 
+TO DO (updated for may 26)
+-refactor flask app to work without vestigial templates, restore login fxnality
+-(eric) finish db
+-get bootstrap to work : ( lol never sad
+
+--------------------------------------------------------------
+
+--------------------------------------------------------------
+
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
