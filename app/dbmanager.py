@@ -30,28 +30,27 @@ def getUserInfo(username: str):
 # AUTHENTICATION RELATED METHODS
 #================================================================================
 
-# returns a tuple in the following format: (login_successful, issue, user_id)
+# returns a tuple in the following format: (login_successful, issue)
 # login_successful will be either True (correct info) or False
 # issue will be None if login_successful is True. Otherwise will be "user not found" or
-# "incorrect username or password"
-# user_id will be returned if login_successful. None if not login_successful
+# "incorrect password"
 def checkLogin(username: str, password: str) -> tuple:
     info = getUserInfo(username)
     if info == None:
-        return (False, "User not found", None)
+        return (False, "Username not found")
     elif (info[0] == username) and (info[1] == saltString(password, salt)):
-        return (True, None, info[2])
-    return (False, "Incorrect username or password", None)
+        return (True, None)
+    return (False, "Incorrect password")
 
-# UNTESTED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # registers a new user by adding their info to the db
-# returns the unique user_id so that it can be added to the session in app.py
 def registerUser(username: str, password: str):
+    #check whether username already exists in db by searching for ir
     command = "SELECT username FROM users WHERE username=?;"
     duplicates = ()
     for row in c.execute(command, [username]):
         duplicates += (row[0],)
 
+    #inserts username
     if duplicates == ():
         command = "INSERT INTO users VALUES (?, ?, '');"
         c.execute(command, [username, saltString(password, salt)])
@@ -91,7 +90,29 @@ def addScore(username: str, score: int):
     db.commit()
 
 #method to add high score into highscore table
+#the flask app is responsible for determining when this should be used
+def addHighScore(username: str, score: int):
+    command = "INSERT INTO highscores VALUES (?, ?)"
+    c.execute(command, [score, username])
+    db.commit()
+
 #method to retrieve high scores
+#returns tuple of tuples of the high score entries
+def getHighScores():
+    command = "SELECT * FROM highscores"
+    highscores = ()
+    for row in c.execute(command):
+        highscores += ((row[0], row[1]),)
+    if highscores == ():
+        return None
+    return highscores
+
+#UNTESTED
+#remove the lowest high score
+def popMinHS():
+    command = "DELETE FROM highscores WHERE score=min(score)"
+    c.execute(command)
+    db.commit()
 
 
 #================================================================================

@@ -31,16 +31,23 @@ ericL, ianC -- 2021-05-27 22:00
 
 jessicaY -- 2021-05-27 22:10
     - worked on long and painful process of logging in and out and registration on the same page
+
+--------------------------------------------------------------
+
+ericL -- 2021-05-28 9:50
+    - removed user id in a couple locations including checkLogin in db
+    - added remaining db methods: addHighScore, getHighScores, popMinHS
+
+jessicaY -- 2021-05-28 10:01
+    - login and registration now works for all possible cases
+    - error and success messages show at top 
+    - username shows if user logged in
+--------------------------------------------------------------
  
 TO DO (updated for may 26)
 -refactor flask app to work without vestigial templates, restore login fxnality
 -(eric) finish db
 -get bootstrap to work : ( lol never sad
-
---------------------------------------------------------------
-
---------------------------------------------------------------
-
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------

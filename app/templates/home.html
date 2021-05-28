@@ -16,13 +16,23 @@
 
 <body>
 	<!-- Trigger/Open The Modal -->
-    Error: {{error_msg}}<br>
-    Success: {{success_msg}}<br>
-    Username: {{un}}<br>
+    {% if error_msg != "" %}
+        <b style="color:red;">Error: {{error_msg}}</b><br>
+    {% endif %}
+    {% if success_msg != "" %}
+        <b>{{success_msg}}</b><br>
+    {% endif %} 
+    {%if un != "!DNE" %}
+        <b>Username:</b> {{un}}<br>
+    {% endif %}
+
     <!--Canvas-->
     <canvas width="600" height="600" id="slate">Hi!</canvas>
 
-{% if loggedIn == "false" %}
+	<button onclick="init()">Initialize</button>
+    <button onclick="render()">Start</button>
+    <button onclick="stopRender()">Stop</button>
+{% if loggedIn == "false" %}<!--show if logged out, hide if logged in-->
     <button id="myBtn">Login / Register</button>
 	<!-- The Modal -->
 	<div id="myModal" class="modal">
@@ -41,10 +51,10 @@
 					<form action="/login-submit" method="POST">
 					<br><h3>LOGIN:</h3><br>
 					<label for="username">Username: </label>
-					<input type="text" name="username" id="username" style="width:250px" required />
+					<input type="text" name="username" id="username" style="width:200px" required />
 					<br><br>
 					<label for="password">Password: </label>
-					<input type="password" name="password" id="password" style="width:250px;" required />
+					<input type="password" name="password" id="password" style="width:200px;" required />
 					<br><br>
 					<button class="button-align" type="submit" style="width:250px; text-align: center;">Login</button>
 					</form>
@@ -54,13 +64,13 @@
 					<form action="/register-submit" method="POST">
 						<br><h3>REGISTER:</h3><br>
 						<label for="username">Username: </label>
-						<input type="text" name="username" id="username" style="width:250px" required />
+						<input type="text" name="username" id="username" style="width:200px" required />
 						<br><br>
 						<label for="password">Password: </label>
-						<input type="password" name="password" id="password" style="width:250px" minlength="5" required />
+						<input type="password" name="password" id="password" style="width:200px" minlength="5" required />
 						<br><br>
 						<label for="password">Confirm password:</label>
-						<input type="password" name="passwordConf" id="passwordConf" style="width:250px" minlength="5" required />
+						<input type="password" name="passwordConf" id="passwordConf" style="width:200px" minlength="5" required />
 						<br><br>
 						<button class="button-align" type="submit" style="width:250px; text-align: centeer;">Register</button>
 					</form>
@@ -88,12 +98,15 @@
 </form>
 {% endif %}
 
+<button id="scores">High Scores</button>
+
 <script> //JAVASCRIPT DIRECTLY IN FILE B/C TOO STUPID TO LINK SCRIPT
 // Get the modal
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
+var btn2 = document.getElementById("scores");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -115,6 +128,7 @@ window.onclick = function(event) {
   }
 }
 </script>
+<script src="/static/js/game.js"></script>
 
   </body>
 </html>
