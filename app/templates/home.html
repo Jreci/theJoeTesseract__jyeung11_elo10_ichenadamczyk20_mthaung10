@@ -10,7 +10,6 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	 crossorigin="anonymous">
-    <style>  #slate {border: 1px solid black} </style>
 	<title>Hello, world!</title>
 </head>
 
@@ -22,27 +21,32 @@
     {% if success_msg != "" %}
         <b>{{success_msg}}</b><br>
     {% endif %} 
-    {%if un != "!DNE" %}
-        <b>Username:</b> {{un}}<br>
+    {%if un != "!DNE" %} <!--Username shows if logged in-->
+        <b>Welcome,</b> {{un}}<br>
     {% endif %}
 
-    <!--Canvas-->
-    <canvas width="600" height="600" id="slate">Hi!</canvas>
+	{% if loggedIn == "true" %}
 
-	<button onclick="init()">Initialize</button>
-    <button onclick="render()">Start</button>
-    <button onclick="stopRender()">Stop</button>
+
+	<form action="/logout" method="POST">
+		<button id="lg" type="submit">Logout</button>
+	</form>
+	{% endif %}
+
+
+	<button id="init">Initialize</button>
+    <button id="startStop">Start</button>
 {% if loggedIn == "false" %}<!--show if logged out, hide if logged in-->
-    <button id="myBtn">Login / Register</button>
+    <button id="lR">Login / Register</button>
 	<!-- The Modal -->
-	<div id="myModal" class="modal">
+	<div id="loginReg" class="modal">
 
 	<!-- Modal content -->
 	<div class="modal-content modal-custom">
 
 		<div class="modal-header">
 			<h2 style="color: black;">Create and login with an account to save your scores!</h2>
-			<span class="close">&times;</span>
+			<span class="closeLoginReg">&times;</span>
 		</div>
 
 		<div class="modal-body">
@@ -87,48 +91,93 @@
         </h3>
     </div>
 
-  </div><!--Modal content-->
+  </div><!--End of modal content-->
 
-  </div><!--My modal-->
+  </div><!--End of loginReg modal-->
 {% endif %}
 
-{% if loggedIn == "true" %}
-<form action="/logout" method="POST">
-    <button type = "submit">Logout</button>
-</form>
-{% endif %}
+    <button id="scores">High Scores</button>
 
-<button id="scores">High Scores</button>
+    <!--Canvas-->
+    <canvas id="slate">Hi!</canvas>
+
+
+<div id="hiScores" class="modal">
+    <div class="modal-content modal-custom">
+        <div class="modal-header">
+            <span class="closeHiScores">&times;</span>
+            <h2>Top 10 scores of all time!</h2>
+        </div>
+
+        <div class="modal-body">
+            <table style="width:75%;">
+                <tr>
+                    <th>Place</th>
+                    <th></th><!--Empty column to make up for the for loop causing the information to move one column over-->
+                    <th>Score</th>
+                    <th>Username</th>
+                </tr>
+                {% for highScore in highScores %} <!--Gets tuple (<score>, <username>)-->
+                <tr>
+                    <th>#{{loop.index}}<th><!--Starts at one-->
+                    <th>{{highScore[0]}}</th>
+                    <th>{{highScore[1]}}</th>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="modal-footer">
+            
+        </div>
+    </div>
+</div>
+
 
 <script> //JAVASCRIPT DIRECTLY IN FILE B/C TOO STUPID TO LINK SCRIPT
 // Get the modal
-var modal = document.getElementById("myModal");
+var modalLoginReg = document.getElementById("loginReg");
+var modalHiScores = document.getElementById("hiScores");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-var btn2 = document.getElementById("scores");
+var buttonLoginReg = document.getElementById("lR");
+var buttonHiScores = document.getElementById("scores");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var span = document.getElementsByClassName("closeLoginReg")[0];
+var span2 = document.getElementsByClassName("closeHiScores")[0];
 
 // When the user clicks the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
+buttonLoginReg.onclick = function() {
+  modalLoginReg.style.display = "block";
+}
+buttonHiScores.onclick = function() {
+    modalHiScores.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-  modal.style.display = "none";
+    modalLoginReg.style.display = "none";
+}
+span2.onclick = function() {
+    modalHiScores.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+  if (event.target == modalLoginReg) {
+    modalLoginReg.style.display = "none";
+  }
+}
+
+window.onclick = function(event) {
+  if (event.target == modalHiScores) {
+    modalHiScores.style.display = "none";
   }
 }
 </script>
 <script src="/static/js/game.js"></script>
+<script src="/static/js/home.js"></script>
 
   </body>
 </html>

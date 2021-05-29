@@ -1,9 +1,8 @@
-
 var c = document.getElementById("slate");
 var ctx = c.getContext("2d");
 //audio context is for playing music
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext();
+var AudioContext;
+var audioContext;
 const CANVAS_HEIGHT = ctx.canvas.height;
 const CANVAS_WIDTH = ctx.canvas.width;
 var requestID = 0;
@@ -31,6 +30,12 @@ var Player = function() {
     //player collision size
     this.width = 20;
     this.height = 20;
+    //update player physics
+    this.update = function() {
+        this.x += this.dx;
+        this.y += this.dy;
+        //PLACEHOLDER
+    }
     //draws the player on the canvas
     this.render = function() {
         ctx.fillStyle = "#F08080";
@@ -168,19 +173,19 @@ var Level = function() {
         land: "stop",
         sounds: {
             jump: {
-                url: "https://ia800109.us.archive.org/16/items/Mu-Ziq_Soundcloud_001-100_of_392/001-100/001%20In%20Hospital.mp3",
+                url: "/static/sounds/jump.mp3",
                 volume: 0.25
             },
             land: {
-                url: "https://ia801003.us.archive.org/15/items/Mu-Ziq_Soundcloud_301-392_of_392/371%20µ-Ziq%20-%20BLT.mp3", //"https://www.myinstants.com/media/sounds/discord-notification.mp3",
+                url: "/static/sounds/land.mp3",
                 volume: 0.25
             },
             walk: {
-                url: "https://ia800109.us.archive.org/16/items/Mu-Ziq_Soundcloud_001-100_of_392/001-100/062%20Cheeky%20Chappie.mp3",
+                url: "/static/sounds/walk.mp3",
                 volume: 0.25
             },
             bgm: {
-                url: "https://ia801003.us.archive.org/15/items/Mu-Ziq_Soundcloud_301-392_of_392/371%20µ-Ziq%20-%20BLT.mp3",
+                url: "https://ia801905.us.archive.org/7/items/super-mario-64-soundtrack/Super%20Mario%2064%20%28Soundtrack%29/1-02%20Title%20Theme.mp3",
                 volume: 0.25
             },
         }
@@ -249,7 +254,7 @@ var Level = function() {
 }
 
 // polygon in-or-out stuff (TESTED AND FIXED)
-// isItIn(polygonPoints, testPoint, directionPoint), doesItIntersect(segment, startPoint, delta)
+// isItIn(polygonPoints, testPoint), doesItIntersect(segment, startPoint)
 {
     //uses ray-casting algorithm: https://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm
     //basically draws a vector from the point towards anywhere; if the vector crosses the polygon an even number of times, the point has to be outside. if it crosses once, the point is inside.
@@ -306,11 +311,15 @@ var Level = function() {
 }
 
 
+
+
 var obbies = [];
 
 var onCameraObbies = [];
 
 function init() {
+    AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioContext = new AudioContext();
     initializeSounds();
 }
 
@@ -343,7 +352,8 @@ function render() {
 };
 
 function stopRender() {
-    window.cancelAnimationFrame(requestID);
     playSound("bgm", "STGOP");
+    if (Math.random() < 0.99) playSounds(); // trash easter egg
+    window.cancelAnimationFrame(requestID);
     bgm = false;
 };

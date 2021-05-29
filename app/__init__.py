@@ -31,14 +31,15 @@ def handle_exception(e):
     return response
 
 #root route loads home page
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])#all routes except logout redirect to here
 def root():
-    print(db.showUsers())
-    #checks to see if the user is already logged in
-    un = "!DNE"
+    
+    un = "!DNE"#does not exist, this string can't be made as a username by user b/c not alphanumeric
     success_msg=""
     error_msg=""
     loggedIn = "false"
+
+    #checks to see if the user is already logged in
     if "username" in session:
         loggedIn = "true"
         un = session["username"]
@@ -47,7 +48,9 @@ def root():
     if "error_msg" in session:
         error_msg = session.pop("error_msg")
 
-    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg)
+    highScores=list(db.getHighScores())
+    
+    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg, highScores=highScores)
 
 
 @app.route("/game", methods=["GET", "POST"])
@@ -103,7 +106,6 @@ def registrate():
     print("Successful registration!")
     return redirect("/")
 
-
 #logout route logs the user out
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
@@ -120,7 +122,6 @@ def logout():
 
     return render_template("home.html", success_msg=success_msg)
 
-
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0') #for replit testing 
+    app.run(host='0.0.0.0') #for replit testing  

@@ -42,11 +42,37 @@ jessicaY -- 2021-05-28 10:01
     - login and registration now works for all possible cases
     - error and success messages show at top 
     - username shows if user logged in
+
+jessicaY -- 2021-05-28 18:41
+    - changed variables in home.html to be more clear
+    - added modal for high scores
+
+michelleT -- 2021-05-28 19:55 
+	- updated styling for top buttons and canvas 
+	- other minor bootstrap/css 
+	- made start/stop one toggle button instead of two separate buttons
+
+ianC -- 2021-05-28 20:00
+    - changed music
+    - fixed polygon algorithm
+    - integrated game.js to the main page
+
+jessicaY -- 2021-05-28 20:17
+    - modal for high scores now pulls and displays data from databases
+
 --------------------------------------------------------------
+
+
  
 TO DO (updated for may 26)
 -refactor flask app to work without vestigial templates, restore login fxnality
+-(eric? :D) initialize high scores table with ten scores of 0
 -(eric) finish db
+-(michelle) can you stylize the high score table ty ty 
+https://www.w3schools.com/html/html_tables.asp
+-add start game button and force end game button (we don't need an actual game, just start and end conditions)
+    - I would also like to use this to have a end condition to submit scores into the database -J
+        - And compare scores against current high scores
 -get bootstrap to work : ( lol never sad
 --------------------------------------------------------------
 --------------------------------------------------------------

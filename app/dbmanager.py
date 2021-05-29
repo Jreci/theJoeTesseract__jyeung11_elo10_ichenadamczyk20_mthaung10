@@ -137,4 +137,10 @@ def close():
     db.close()
 
 #registerUser("joelel", "joe")
+# addHighScore("a", 1)
+# addHighScore("b", 2)
+# addHighScore("c", 3)
+#for i in range (5): #b/c the dbmanager is run twice lol
+#    addHighScore("This place has not yet been taken!", 0)
 print(showUsers())
+print(showHighScores())
