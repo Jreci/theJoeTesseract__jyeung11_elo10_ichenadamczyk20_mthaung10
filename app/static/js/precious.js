@@ -1,4 +1,44 @@
-//adsf
+//preserving a funny bug
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var c = document.getElementById("slate");
 var ctx = c.getContext("2d");
 const CANVAS_HEIGHT = ctx.canvas.height;
@@ -120,7 +160,6 @@ var Obbi = function(x, y, width, height) {
             return "left"; 
         }
         return "ibbixyzzy";
-        //BUG: collision "works" but distance to the platform isn't being considered: if you're above the platform, you can't move down regardless of touching it, and etc.
     };
 };
 

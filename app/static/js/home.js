@@ -16,5 +16,10 @@ var toggle = function () {
 
 s.addEventListener("click", toggle);
 
+var enableStart = function() {
+	s.disabled = false;
+}
+
 
 document.querySelector("#init").addEventListener("click", init);
+

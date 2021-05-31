@@ -8,176 +8,242 @@
 	<link rel="stylesheet" href="/static/css/styles.css">
 
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<!-- Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
 	<title>Hello, world!</title>
 </head>
 
 <body>
-	<!-- Trigger/Open The Modal -->
-    {% if error_msg != "" %}
-        <b style="color:red;">Error: {{error_msg}}</b><br>
-    {% endif %}
-    {% if success_msg != "" %}
-        <b>{{success_msg}}</b><br>
-    {% endif %} 
-    {%if un != "!DNE" %} <!--Username shows if logged in-->
+	{% if error_msg != "" %}
+		<b style="color:red;">Error: {{error_msg}}</b><br>
+	{% endif %}
+	{% if success_msg != "" %}
+		<b>{{success_msg}}</b><br>
+	{% endif %} 
+    {% if un != "!DNE" %} <!--Username shows if logged in-->
         <b>Welcome,</b> {{un}}<br>
     {% endif %}
 
-	{% if loggedIn == "true" %}
+	<button id="init" onclick="enableStart()">Initialize</button>
+    <button id="startStop" disabled>Start</button>
 
-
+    {% if loggedIn == "false" %}<!--show if logged out, hide if logged in-->
+        <button id="lR">Login / Register</button> <!-- Trigger/Open The Modal -->
+    {% endif %} <!--if logged in-->
+    {% if loggedIn == "true" %}
 	<form action="/logout" method="POST">
-		<button id="lg" type="submit">Logout</button>
+		<button id="lR" type="submit">Logout</button> <!--logout-->
 	</form>
 	{% endif %}
 
+    {% if loggedIn == "false" %}
+    <div id="loginReg" class="modal"> <!-- The Modal -->
+        
+        <div class="modal-content"><!-- Modal content -->
 
-	<button id="init">Initialize</button>
-    <button id="startStop">Start</button>
-{% if loggedIn == "false" %}<!--show if logged out, hide if logged in-->
-    <button id="lR">Login / Register</button>
-	<!-- The Modal -->
-	<div id="loginReg" class="modal">
+            <div class="modal-header">
+                <h2 style="color: black;">Create and login with an account to save your scores!</h2>
+                <span class="closeLoginReg">&times;</span><!--Close button-->
+            </div>
 
-	<!-- Modal content -->
-	<div class="modal-content modal-custom">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="column" style="background-color:#aaa; padding:15px;">
+                        <form action="/login-submit" method="POST">
+                            <br><h3>LOGIN:</h3><br>
+                            <label for="username">Username: </label>
+                            <input type="text" name="username" id="username" style="width:200px" required />
+                            <br><br>
+                            <label for="password">Password: </label>
+                            <input type="password" name="password" id="password" style="width:200px;" required />
+                            <br><br>
+                            <button class="button-align" type="submit" style="width:250px; text-align: center;">Login</button>
+                        </form>
+                    </div>
 
-		<div class="modal-header">
-			<h2 style="color: black;">Create and login with an account to save your scores!</h2>
-			<span class="closeLoginReg">&times;</span>
-		</div>
+                    <div class="column" style="background-color:#bbb; padding:15px;">
+                        <form action="/register-submit" method="POST">
+                            <br><h3>REGISTER:</h3><br>
+                            <label for="username">Username: </label>
+                            <input type="text" name="username" id="username" style="width:200px" required />
+                            <br><br>
+                            <label for="password">Password: </label>
+                            <input type="password" name="password" id="password" style="width:200px" minlength="5" required />
+                            <br><br>
+                            <label for="password">Confirm password:</label>
+                            <input type="password" name="passwordConf" id="passwordConf" style="width:200px" minlength="5" required />
+                            <br><br>
+							<button class="button-align" type="submit" style="width:250px; text-align: center;">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-		<div class="modal-body">
-			<div class="row">
-				<div class="column" style="background-color:#aaa; padding:15px;">
-					<form action="/login-submit" method="POST">
-					<br><h3>LOGIN:</h3><br>
-					<label for="username">Username: </label>
-					<input type="text" name="username" id="username" style="width:200px" required />
-					<br><br>
-					<label for="password">Password: </label>
-					<input type="password" name="password" id="password" style="width:200px;" required />
-					<br><br>
-					<button class="button-align" type="submit" style="width:250px; text-align: center;">Login</button>
-					</form>
-				</div>
-
-				<div class="column" style="background-color:#bbb; padding:15px;">
-					<form action="/register-submit" method="POST">
-						<br><h3>REGISTER:</h3><br>
-						<label for="username">Username: </label>
-						<input type="text" name="username" id="username" style="width:200px" required />
-						<br><br>
-						<label for="password">Password: </label>
-						<input type="password" name="password" id="password" style="width:200px" minlength="5" required />
-						<br><br>
-						<label for="password">Confirm password:</label>
-						<input type="password" name="passwordConf" id="passwordConf" style="width:200px" minlength="5" required />
-						<br><br>
-						<button class="button-align" type="submit" style="width:250px; text-align: centeer;">Register</button>
-					</form>
-				</div>
+            <div class="modal-footer"></div>
+        </div><!--End of modal content-->
+    </div><!--End of loginReg modal-->
+    {% endif %}
+    {% if loggedIn == "true" %}<!--This modal is necessary so that a "loginReg" modal exists even when logged in-->
+        <div id="loginReg" class="modal"> <!--No modal content tag, will not have animation-->
+        
+            <div class="modal-header">
+                <h2 style="color: black;">See you next time!</h2>
+                <span class="closeLoginReg">&times;</span><!--Close button-->
+            </div>
 
         </div>
-    </div>
-
-    <div class="modal-footer">
-        <h3>
-            <!--{% if error_msg is none %}
-                Error:-->
-            <!--{% endif %}-->
-        </h3>
-    </div>
-
-  </div><!--End of modal content-->
-
-  </div><!--End of loginReg modal-->
-{% endif %}
+    {% endif %}
 
     <button id="scores">High Scores</button>
+    <div id="hiScores" class="modal">
+        <div class="modal-content modal-custom">
 
-    <!--Canvas-->
-    <canvas id="slate">Hi!</canvas>
+            <div class="modal-header">
+                <h2 style="color: black;">Top 10 scores of all time!</h2>
+                <span class="closeHiScores">&times;</span>
+            </div>
 
-
-<div id="hiScores" class="modal">
-    <div class="modal-content modal-custom">
-        <div class="modal-header">
-            <span class="closeHiScores">&times;</span>
-            <h2>Top 10 scores of all time!</h2>
-        </div>
-
-        <div class="modal-body">
-            <table style="width:75%;">
-                <tr>
-                    <th>Place</th>
-                    <th></th><!--Empty column to make up for the for loop causing the information to move one column over-->
-                    <th>Score</th>
-                    <th>Username</th>
-                </tr>
-                {% for highScore in highScores %} <!--Gets tuple (<score>, <username>)-->
-                <tr>
-                    <th>#{{loop.index}}<th><!--Starts at one-->
-                    <th>{{highScore[0]}}</th>
-                    <th>{{highScore[1]}}</th>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-        
-        <div class="modal-footer">
+            <div class="modal-body">
+                <table style="width:100%;" class="table table-striped">
+                    <tr>
+                        <th scope="col">Place</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Username</th>
+                    </tr>
+                    {% for highScore in highScores %} <!--Gets tuple (<score>, <username>)-->
+                    <tr>
+                        <th scope="col" style="width: 15%">#{{loop.index}}</th><!--Increment variable, starts at one-->
+                        <th scope="col" style="width: 25%">{{highScore[0]}}</th><!--score-->
+                        <th scope="col" style="width: 60%">{{highScore[1]}}</th><!--username-->
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
             
+            <div class="modal-footer">
+                
+            </div>
         </div>
     </div>
-</div>
+    
+    <button id="uScores">My Scores</button>
+    <div id="userScores" class="modal">
+        <div class="modal-content modal-custom">
+            {% if loggedIn == "false" %}
+               <div class="modal-header">
+                    <span class="closeUserScores">&times;</span>
+                </div>
+
+                <div class="modal-body" style="text-align: center">
+                    <h3>You have to be logged in to see your own scores!</h3>
+                </div>
+
+                <div class="modal-footer">
+                </div>
+            {% endif %}
+            {% if loggedIn == "true" %}
+                <div class="modal-header">
+                    <span class="closeUserScores">&times;</span>
+                </div>
+
+                <div class="modal-body">
+                    <tr>
+                        <th scope="col">Place</th>
+                        <th scope="col">Score</th>
+                    </tr>
+                    {% for highScore in userHighScores %}
+                    <tr>
+                        <th scope="col" style="width: 15%">#{{loop.index}}</th><!--Increment variable, starts at one-->
+                        <th scope="col" style="width: 25%">{{userHighScore[0]}}</th><!--score-->
+                    </tr>
+                    {% endfor %}
+                </div>
+
+                <div class="modal-footer">
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
 
-<script> //JAVASCRIPT DIRECTLY IN FILE B/C TOO STUPID TO LINK SCRIPT
-// Get the modal
-var modalLoginReg = document.getElementById("loginReg");
-var modalHiScores = document.getElementById("hiScores");
+    <!--Canvas-->
+    <canvas id="slate" width="800" height="800">Hi!</canvas>
 
-// Get the button that opens the modal
-var buttonLoginReg = document.getElementById("lR");
-var buttonHiScores = document.getElementById("scores");
+    <!--SCORE TESTING STUFF HERE-->
+    <form action="/newScore" method="POST">
+        <input type="number" name="score" id="score" style="width:100px"/>
+        <button type="submit">Submit score</button>
+    </form>
+    <!--SCORE TESTING STUFF HERE-->
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("closeLoginReg")[0];
-var span2 = document.getElementsByClassName("closeHiScores")[0];
+    <script> //JAVASCRIPT DIRECTLY IN FILE B/C TOO STUPID TO LINK SCRIPT
+    // Get the modal
+    var modalLoginReg = document.getElementById("loginReg");
+    var modalHiScores = document.getElementById("hiScores");
+    var modalUserScores = document.getElementById("userScores");
 
-// When the user clicks the button, open the modal
-buttonLoginReg.onclick = function() {
-  modalLoginReg.style.display = "block";
-}
-buttonHiScores.onclick = function() {
-    modalHiScores.style.display = "block";
-}
+    // Get the button that opens the modal
+    var buttonLoginReg = document.getElementById("lR");
+    var buttonHiScores = document.getElementById("scores");
+    var buttonUserScores = document.getElementById("uScores");
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modalLoginReg.style.display = "none";
-}
-span2.onclick = function() {
-    modalHiScores.style.display = "none";
-}
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("closeLoginReg")[0];
+    var span2 = document.getElementsByClassName("closeHiScores")[0];
+    var span3 = document.getElementsByClassName("closeUserScores")[0];
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modalLoginReg) {
-    modalLoginReg.style.display = "none";
-  }
-}
+    // When the user clicks the button, open the modal
+    buttonLoginReg.onclick = function() {
+        modalLoginReg.style.display = "block";
+    }
+    buttonHiScores.onclick = function() {
+        modalHiScores.style.display = "block";
+    }
+    buttonUserScores.onclick = function() {
+        modalUserScores.style.display = "block";
+    }
 
-window.onclick = function(event) {
-  if (event.target == modalHiScores) {
-    modalHiScores.style.display = "none";
-  }
-}
-</script>
-<script src="/static/js/game.js"></script>
-<script src="/static/js/home.js"></script>
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modalLoginReg.style.display = "none";
+    }
+    span2.onclick = function() {
+        modalHiScores.style.display = "none";
+    }
+    span3.onclick = function() {
+         modalUserScores.style.display = "none";
+    }
 
-  </body>
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modalLoginReg) {
+            modalLoginReg.style.display = "none";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modalHiScores) {
+            modalHiScores.style.display = "none";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modalUserScores) {
+            modalUserScores.style.display = "none";
+        }
+    }
+    </script>
+
+    <script src="/static/js/inputs.js"></script>
+    <script src="/static/js/sound.js"></script>
+    <script src="/static/js/polygon.js"></script>
+    <script src="/static/js/game.js"></script>
+    <script src="/static/js/home.js"></script>
+
+</body>
 </html>

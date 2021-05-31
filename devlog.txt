@@ -57,26 +57,52 @@ ianC -- 2021-05-28 20:00
     - fixed polygon algorithm
     - integrated game.js to the main page
 
-jessicaY -- 2021-05-28 20:17
+jessicaY -- 2021-05-28 21:24
     - modal for high scores now pulls and displays data from databases
+    - added third modal for user high scores    
+        - a lot of suffering went into this b/c i originally had the third modal only be created when user was logged in, which I THINK made everything malfunction because the html file was trying to pull data from a button and modal that wasn't created. Did a cop out where the "My Scores" button will just prompt user to log in to see their scores. :)
+    - also renamed variables and commented out code in home.html
 
 --------------------------------------------------------------
 
+jessicaY -- 2021-05-30 19:41
+    - fixed bug where modals did not worked when logged in
 
+ericL, ianC -- 2021-05-30 20:21
+    - configured player movement and gravity and collision with canvas
+    - buggy version of collision with platforms
+
+ericL -- 2021-05-30 21:00
+    - set high score tables to start with 10 scores of 0 at startup
+    - modified popMinHS
+
+jessicaY -- 2021-05-30 21:28
+    - added feature to submit scores
+    - new scores are tested whether they are high enough to be added to the high score tables
+        - if so, it is added to database and lowest score is removed from database (thanks Eric for the brilliant popMinHS function, which removes a random applicable lowest score if there are duplicates)
+
+ianC -- 2021-05-30 22:00
+    - wrote code to sort a list of tuples from greatest to lowest in one line, what a god -J
+
+micehlleT -- 2021-05-30 22:10 
+	- uploaded flag 
+	- disabled start button before pressing initialize
+	- more homepage styling
+	- second dose pains head hurtin
+
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
  
-TO DO (updated for may 26)
--refactor flask app to work without vestigial templates, restore login fxnality
--(eric? :D) initialize high scores table with ten scores of 0
--(eric) finish db
--(michelle) can you stylize the high score table ty ty 
-https://www.w3schools.com/html/html_tables.asp
--add start game button and force end game button (we don't need an actual game, just start and end conditions)
-    - I would also like to use this to have a end condition to submit scores into the database -J
-        - And compare scores against current high scores
--get bootstrap to work : ( lol never sad
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
---------------------------------------------------------------
+TO DO (updated for may 30)
+- timer on screen that runs when start is pressed and stops when stop is pressed (Mich)
+    - score related to timing
+- jumping in game
+    - and whatever else eric and ian are doing lololol
+- background needed (our team flag?)
+- user high scores table -j
+- updating user high scores table -j
+-get bootstrap to work : ( lol never sad PLEASE WORK PLEASE PLEASE 
+

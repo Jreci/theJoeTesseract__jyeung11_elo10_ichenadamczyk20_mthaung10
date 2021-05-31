@@ -4,6 +4,7 @@ import http.client
 import json
 import urllib
 import requests
+import dbmanager as manager
 #API STUFF END
 
 DB_FILE = "./app/db.db"
@@ -28,3 +29,7 @@ def createTables():
 
 if __name__ == "__main__":
     createTables()
+    manager.addHighScore("DUPLICATE", 1)
+    for i in range(10): 
+        manager.addHighScore("This place has not yet been taken!", i)
+    

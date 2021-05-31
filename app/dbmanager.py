@@ -110,9 +110,20 @@ def getHighScores():
 #UNTESTED
 #remove the lowest high score
 def popMinHS():
-    command = "DELETE FROM highscores WHERE score=min(score)"
+    # command = "SELECT min(score) FROM highscores"
+    # for row in c.execute(command):
+    #     print(row)
+    command = """DELETE FROM highscores WHERE 
+                    score=(SELECT min(score) FROM highscores) 
+                AND 
+                    username=(
+                        SELECT username FROM highscores WHERE 
+                        score=(SELECT min(score) FROM highscores) 
+                        LIMIT 1
+                        )"""
     c.execute(command)
     db.commit()
+
 
 
 #================================================================================
@@ -141,6 +152,6 @@ def close():
 # addHighScore("b", 2)
 # addHighScore("c", 3)
 #for i in range (5): #b/c the dbmanager is run twice lol
-#    addHighScore("This place has not yet been taken!", 0)
+ #   addHighScore("This place has not yet been taken!", 0)
 print(showUsers())
 print(showHighScores())

@@ -33,11 +33,14 @@ def handle_exception(e):
 #root route loads home page
 @app.route("/", methods=["GET", "POST"])#all routes except logout redirect to here
 def root():
-    
+    #db.addHighScore("DUP", 0)
     un = "!DNE"#does not exist, this string can't be made as a username by user b/c not alphanumeric
     success_msg=""
     error_msg=""
     loggedIn = "false"
+
+    #untested
+    addHighScore = "false"
 
     #checks to see if the user is already logged in
     if "username" in session:
@@ -49,13 +52,32 @@ def root():
         error_msg = session.pop("error_msg")
 
     highScores=list(db.getHighScores())
+
+    if "checkHighScore" in session:#check is high score is great enough to be added to high score table
+        session.pop("checkHighScore")
+        for x in highScores:
+            print("Username: " + str(x[1]) + "| Score: " + str(x[0]))
+            if x[0] < int(session["score"]):#if old score in table less than new score
+                print("The old score " + str(x[0]) + " is less than the new score " + str(session["score"]))
+                if "username" in session:
+                    db.addHighScore(str(session["username"]), int(session["score"]))#add new score
+                    db.popMinHS()#remove lowest score
+                    highScores=list(db.getHighScores()) #get new updated scores
+                    break
+                else:
+                    db.addHighScore("Guest", int(session["score"]))
+                    db.popMinHS()
+                    highScores=list(db.getHighScores()) #get new updated scores
+                    print("TESTING IF LOOP BREAKS")
+                    break 
+            else:
+                print("The old score " + str(x[0]) + " is greater than the new score " + str(session["score"]))
+        session.pop("score")
+
+    highScores2 = sorted(highScores, key=lambda x: x[0])[::-1] #sorted database
+    userHighScores=""
     
-    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg, highScores=highScores)
-
-
-@app.route("/game", methods=["GET", "POST"])
-def game():
-    return render_template("game.html")
+    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg, highScores=highScores2, userHighScores=userHighScores)
 
 #login submit route handles the form submission from pressing the login button on the login page
 @app.route("/login-submit", methods=["POST"])
@@ -121,6 +143,14 @@ def logout():
         return redirect("/")
 
     return render_template("home.html", success_msg=success_msg)
+
+#UNTESTED
+@app.route("/newScore", methods=["GET", "POST"])
+def checkNewScore(): #game ended, check if score should be added to hiscore table
+    session["checkHighScore"] = "true"
+    session["score"] = request.form["score"]
+    print(session["score"])
+    return redirect("/")
 
 if __name__ == "__main__":
     app.debug = True
