@@ -25,7 +25,7 @@ var Player = function() {
     this.dx = 0;
     this.dy = 0;
     this.maxSpeed = 5;
-    this.jumpStrength = -5;
+    this.jumpStrength = -7;
     //state var for if player is jumping or not
     this.airborne = true;
     //player collision size
@@ -66,12 +66,22 @@ var Player = function() {
     //check collision with object
     this.updateCollision = function(obbi) {
         var direction = obbi.checkDirection(this);
-        if (direction == "left") this.dx = Math.max(0, this.dx);//obbi is to the left of player
-        if (direction == "right") this.dx = Math.min(0, this.dx);//obbi is to the right of player
-        if (direction == "up") this.dy = Math.max(0, this.dy);//obstacle is above player
+        if (direction == "left") {
+            this.dx = Math.max(0, this.dx);//obbi is to the left of player
+            this.x = obbi.x + obbi.width;
+        }
+        if (direction == "right") {
+            this.dx = Math.min(0, this.dx);//obbi is to the right of player
+            this.x = obbi.x - this.width;
+        }
+        if (direction == "up") {
+            this.dy = Math.max(0, this.dy);//obstacle is above player
+            this.y = obbi.y + obbi.height;
+        }
         if (direction == "down") {
             this.airborne = false;
             this.dy = Math.min(0, this.dy);//obstacle is below Player
+            this.y = obbi.y - this.height;
         }
     };
 };
@@ -79,16 +89,20 @@ var Player = function() {
 //camera variables
 var Camera = {
     //camera position
-    x: 300,
-    y: 300,
-    //camera bounds (how far the camera can move away from the player)
-    left: 300,
-    right: 300,
-    bottom: 300,
-    top: 600,
+    x: 400,
+    y: 400,
+    //camera bounding distances (the bigger playspace)
+    left: 400,
+    right: 400,
+    bottom: 400,
+    top: 800,
     //total field of view
     width: CANVAS_WIDTH,
     height: CANVAS_HEIGHT,
+
+    render: function() {
+        return None;
+    }
 };
 
 //obstacle
@@ -107,17 +121,19 @@ var Obbi = function(x, y, width, height) {
 
     //determines the direction that the platform is in from the player's perspective
     this.checkDirection = function(player) { //returns left, right, up, down, or ibbixyzzy
+        if (intersect(player.y, player.y + player.height, this.y, this.y + this.height)) { //if the y ranges intersect
+            //further testing for left or right
+            if (player.x + player.width > this.x && player.x < this.x) //if the right side of the player is left of the left of the obbi
+                return "right"; //then the obbi is right from the player
+            if (player.x + player.width > this.x + this.width && player.x < this.x + this.width)
+                return "left";
+        }
         if (intersect(player.x, player.x + player.width, this.x, this.x + this.width)) { //if the x ranges intersect
             //further testing for up or down
-            if (player.y + player.height < this.y) //if the bottom of the player is above the top of the obbi
+            if (player.y + player.height > this.y && player.y < this.y) //if the bottom of the player is above the top of the obbi
                 return "down"; //then the obbi is downwards from the player
-            return "up";
-        }
-        else if (intersect(player.y, player.y + player.height, this.y, this.y + this.height)) { //if the y ranges intersect
-            //further testing for left or right
-            if (player.x + player.width < this.x) //if the right side of the player is left of the left of the obbi
-                return "right"; //then the obbi is right from the player
-            return "left"; 
+            if (player.y + player.height > this.y + this.height && player.y < this.y + this.height)
+                return "up";
         }
         return "ibbixyzzy";
         //BUG: collision "works" but distance to the platform isn't being considered: if you're above the platform, you can't move down regardless of touching it, and etc.
@@ -156,7 +172,13 @@ function init() {
     audioContext = new AudioContext();
     initializeSounds();
     player = new Player();
-    obbies.push(new Obbi(200, 700, 500, 50));
+    obbies.push(new Obbi(200, 700, 600, 20));
+    obbies.push(new Obbi(300, 600, 500, 20));
+    obbies.push(new Obbi(400, 500, 400, 20));
+    obbies.push(new Obbi(500, 400, 300, 20));
+    obbies.push(new Obbi(600, 300, 200, 20));
+    obbies.push(new Obbi(700, 200, 100, 20));
+    obbies.push(new Obbi(  0, 100, 600, 20));
 
 }
 

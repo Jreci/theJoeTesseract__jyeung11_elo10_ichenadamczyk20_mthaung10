@@ -84,12 +84,30 @@ jessicaY -- 2021-05-30 21:28
 ianC -- 2021-05-30 22:00
     - wrote code to sort a list of tuples from greatest to lowest in one line, what a god -J
 
-micehlleT -- 2021-05-30 22:10 
+michelleT -- 2021-05-30 22:10 
 	- uploaded flag 
 	- disabled start button before pressing initialize
 	- more homepage styling
 	- second dose pains head hurtin
 
+--------------------------------------------------------------
+
+ianC -- 2021-05-31 14:45
+    - fixed collisions
+
+--------------------------------------------------------------
+
+ericL -- 2021-06-02 10:00
+    - added more platforms
+
+michelleT -- 2021-06-02 10:00
+	- started on timer ;)
+
+jessicaY, ericL -- 2021-06-02 10:02
+    - added unique guest ids (everytime guest submits score, guest id increments so that there are no duplicate "usernames" in the highscore table)
+
+--------------------------------------------------------------
+--------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------

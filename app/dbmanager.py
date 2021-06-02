@@ -68,16 +68,17 @@ def addScore(username: str, score: int):
     #get the user's scores and parse the string into a list
     scoresAsStr = getUserInfo(username)[2]
     scoresAsList = scoresAsStr.split("~")
+    scoresAsList2 = scoresAsList[1:]
 
-    lowestScore = min(scoresAsList)
+    lowestScore = min(scoresAsList2)
     #if the user has the max number of scores and the new score beats
     #the lowest existing score, then replace it
-    if (len(scoresAsList) >= 10 and score > lowestScore): 
+    if (len(scoresAsList2) >= 10 and score > int(lowestScore)): 
         scoresAsList.remove(lowestScore)
-        scoresAsList.append(score)
+        scoresAsList.append(str(score))
     #if the user has less than the max #, just add the new score
-    elif (len(scoresAsList) < 10):
-        scoresAsList.append(score)
+    elif (len(scoresAsList2) < 10):
+        scoresAsList.append(str(score))
     #the new score won't be added if the user has max # of scores and
     #the new score doesn't beat any existing score
 
@@ -153,5 +154,6 @@ def close():
 # addHighScore("c", 3)
 #for i in range (5): #b/c the dbmanager is run twice lol
  #   addHighScore("This place has not yet been taken!", 0)
+counter = 0;
 print(showUsers())
 print(showHighScores())

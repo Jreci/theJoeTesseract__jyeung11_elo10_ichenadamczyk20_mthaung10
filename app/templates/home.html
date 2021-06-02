@@ -29,7 +29,7 @@
         <b>Welcome,</b> {{un}}<br>
     {% endif %}
 
-	<button id="init" onclick="enableStart()">Initialize</button>
+	<button id="init">Initialize</button>
     <button id="startStop" disabled>Start</button>
 
     {% if loggedIn == "false" %}<!--show if logged out, hide if logged in-->
@@ -152,16 +152,18 @@
                 </div>
 
                 <div class="modal-body">
-                    <tr>
-                        <th scope="col">Place</th>
-                        <th scope="col">Score</th>
-                    </tr>
-                    {% for highScore in userHighScores %}
-                    <tr>
-                        <th scope="col" style="width: 15%">#{{loop.index}}</th><!--Increment variable, starts at one-->
-                        <th scope="col" style="width: 25%">{{userHighScore[0]}}</th><!--score-->
-                    </tr>
-                    {% endfor %}
+                    <table style="width:100%;" class="table table-striped">
+                        <tr>
+                            <th scope="col">Place</th>
+                            <th scope="col">Score</th>
+                        </tr>
+                        {% for userHighScore in userHighScores %}
+                        <tr>
+                            <th scope="col" style="width: 15%">#{{loop.index}}</th><!--Increment variable, starts at one-->
+                            <th scope="col" style="width: 25%">{{userHighScore[0]}}</th><!--score-->
+                        </tr>
+                        {% endfor %}
+                    </table>
                 </div>
 
                 <div class="modal-footer">
@@ -169,6 +171,12 @@
             {% endif %}
         </div>
     </div>
+
+	<!--<div class="timer" style="text-align: center">
+		<label id="minutes">00</label>
+		<label id="seconds">00</label> 
+	</div>-->
+
 
 
     <!--Canvas-->

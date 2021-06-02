@@ -39,13 +39,14 @@ def root():
     error_msg=""
     loggedIn = "false"
 
-    #untested
     addHighScore = "false"
+    userHighScores=""
 
     #checks to see if the user is already logged in
     if "username" in session:
         loggedIn = "true"
         un = session["username"]
+        userHighScores = db.getUserInfo(un)[2].split("~")
     if "success_msg" in session:
         success_msg = session.pop("success_msg")
     if "error_msg" in session:
@@ -65,19 +66,25 @@ def root():
                     highScores=list(db.getHighScores()) #get new updated scores
                     break
                 else:
-                    db.addHighScore("Guest", int(session["score"]))
+                    db.addHighScore("Guest" + str(db.counter), int(session["score"]))
+                    db.counter += 1#keep guestids unique
                     db.popMinHS()
                     highScores=list(db.getHighScores()) #get new updated scores
-                    print("TESTING IF LOOP BREAKS")
                     break 
             else:
                 print("The old score " + str(x[0]) + " is greater than the new score " + str(session["score"]))
+
+        if "username" in session:        
+            db.addScore(un, int(session["score"]))
+            userHighScores = db.getUserInfo(un)[2].split("~") #get new updated scores
         session.pop("score")
 
     highScores2 = sorted(highScores, key=lambda x: x[0])[::-1] #sorted database
-    userHighScores=""
+    userHighScores2 = sorted(userHighScores[1:], key=lambda x: x[0])[::-1]
     
-    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg, highScores=highScores2, userHighScores=userHighScores)
+    print("User high scores: " + str(userHighScores))
+
+    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg, highScores=highScores2, userHighScores=userHighScores2)
 
 #login submit route handles the form submission from pressing the login button on the login page
 @app.route("/login-submit", methods=["POST"])
