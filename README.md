@@ -16,7 +16,7 @@ Idea: Platformer with Physics
 `cd theJoeTesseract__jyeung11_elo10_ichenadamczyk20_mthaung10`
 4. Install the required modules:
 `pip install -r requirements.txt`
-5. Go into the app folder:
-`cd app`
+5. Run the database setup file:
+`python app/dbsetup.py`
 6. Run the python file: 
-`python __init__.py`
+`python app/__init__.py`

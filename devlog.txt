@@ -107,7 +107,28 @@ jessicaY, ericL -- 2021-06-02 10:02
     - added unique guest ids (everytime guest submits score, guest id increments so that there are no duplicate "usernames" in the highscore table)
 
 --------------------------------------------------------------
+
+jessicaY -- 2021-06-05 17:48
+    - edited team flag (made by Michelle) for sizing (and centering of JOE) and added as background
+    - made and added "starting screen" before game is initialized
+        - big thanks to Eric for troubleshooting. Gotta remember that images need to be in the static folder to be referenced ahahaha (:
+
 --------------------------------------------------------------
+
+jessicaY -- 2021-06-06 22:29
+    - initialize button disabled when game is in play, enabled when game is not running
+    - locally made "flood" that rises with time that kills player and ends game when it reaches the player
+        - needs to be changed so that it doesn't rise accordingly to the canvas, but the scope of the game
+
+michelleT -- 2021-06-06 22:30
+	- pain
+	- timer
+    
+ericL, ianC -- 2021-06-06 22:30
+    - flipped the coordinate system of the entire game, decoupled it from the canvas coordinates in order to not be upside down
+    - implemented camera tracking feature to follow the player, made obstacles dynamically move around the player instead of the player moving around obbies
+    - fixed bugs that came with flipping the coordiante system
+    
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
@@ -117,10 +138,5 @@ jessicaY, ericL -- 2021-06-02 10:02
 TO DO (updated for may 30)
 - timer on screen that runs when start is pressed and stops when stop is pressed (Mich)
     - score related to timing
-- jumping in game
-    - and whatever else eric and ian are doing lololol
-- background needed (our team flag?)
-- user high scores table -j
-- updating user high scores table -j
 -get bootstrap to work : ( lol never sad PLEASE WORK PLEASE PLEASE 
 

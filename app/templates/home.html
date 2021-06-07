@@ -15,7 +15,14 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	
-	<title>Hello, world!</title>
+	<title>Pitiful Platformer Present!</title>
+    <style>
+        body {
+            background-image: url("/static/images/flag.jpg");
+            /* background-repeat: no-repeat; */
+            background-size: 100% 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -172,15 +179,24 @@
         </div>
     </div>
 
-	<!--<div class="timer" style="text-align: center">
-		<label id="minutes">00</label>
-		<label id="seconds">00</label> 
-	</div>-->
+	<div style="text-align: center; color: white;" >
+		<h2 id="timer">00:00:00<h2>
+    </div>
 
-
-
+    <img id="logo" width="800" height="800" src="/static/images/logo.png" alt="Press initialize to start!" style="display: none"><!--Load image for js to reference but make invisible-->
+    <img id="gameover" width="800" height="800" src="/static/images/gameover.jpg" alt="Press initialize to start!" style="display: none"><!--Load image for js to reference but make invisible-->
     <!--Canvas-->
     <canvas id="slate" width="800" height="800">Hi!</canvas>
+    <script>
+        window.onload = function() {
+            var c = document.getElementById("slate");
+            var ctx = c.getContext("2d");
+            var img = document.getElementById("logo");
+            ctx.drawImage(img, 0, 0);
+            /*ctx.fillRect(0,0,800,800)*/
+        }
+    </script>
+
 
     <!--SCORE TESTING STUFF HERE-->
     <form action="/newScore" method="POST">
