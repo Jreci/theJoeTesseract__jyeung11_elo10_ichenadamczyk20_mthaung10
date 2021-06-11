@@ -164,10 +164,10 @@
                             <th scope="col">Place</th>
                             <th scope="col">Score</th>
                         </tr>
-                        {% for userHighScore in userHighScores %}
+                        {% for uHS in userHighScores2 %}
                         <tr>
-                            <th scope="col" style="width: 15%">#{{loop.index}}</th><!--Increment variable, starts at one-->
-                            <th scope="col" style="width: 25%">{{userHighScore[0]}}</th><!--score-->
+                            <th scope="col" style="width: 15%">{{loop.index}}</th><!--Increment variable, starts at one-->
+                            <th scope="col" style="width: 25%">{{uHS}}</th><!--score-->
                         </tr>
                         {% endfor %}
                     </table>
@@ -184,7 +184,9 @@
     </div>
 
     <img id="logo" width="800" height="800" src="/static/images/logo.png" alt="Press initialize to start!" style="display: none"><!--Load image for js to reference but make invisible-->
-    <img id="gameover" width="800" height="800" src="/static/images/gameover.jpg" alt="Press initialize to start!" style="display: none"><!--Load image for js to reference but make invisible-->
+    <img id="gameover" width="800" height="800" src="/static/images/gameover.jpg" alt="Press initialize to start!" style="display: none">
+    <img id="forestbg" width="800" height="800" src="/static/images/bg.jpg" alt="Imagine trees and grass if you can" style="display: none">
+    <img id="woodtexture" width="40" height="20" src="/static/images/wood.jpg" alt="This is a wood board" style="display: none"><!--Load image for js to reference but make invisible-->
     <!--Canvas-->
     <canvas id="slate" width="800" height="800">Hi!</canvas>
     <script>
@@ -198,17 +200,13 @@
     </script>
 
 
-    <!--SCORE TESTING STUFF HERE-->
+    
     <form id="submitScore" action="/newScore" method="POST">
-        <input type="hidden" name="score" id="score">
-        <script>
-            console.log()
-            document.querySelector('#score').value = 3//document.getElementById("yPos")
-        </script>
+        <input type="hidden" name="playerScore" id="playerScore" value="TESTING">
         <!--<input type="number" name="score" id="score" style="width:100px"/>-->
-        <button type="submit">Submit score</button>
+        <!-- <button type="submit">Submit score</button> -->
     </form>
-    <!--SCORE TESTING STUFF HERE-->
+    
 
     <script> //JAVASCRIPT DIRECTLY IN FILE B/C TOO STUPID TO LINK SCRIPT
     // Get the modal

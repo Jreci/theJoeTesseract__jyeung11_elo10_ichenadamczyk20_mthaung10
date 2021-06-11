@@ -14,7 +14,7 @@ var gravity = 0.2;
 var friction = 0.7;
 var airResistance = 0.1;
 
-var floodTimer=-10;
+var floodTimer=-30;
 
 //ALL X AND Y COORDINATES FOR CAMERA, PLAYER, AND OBBI ARE ON THE FIRST QUADRANT OF A NORMAL CARTESIAN PLANE.
 //THE ONLY PLACES WHERE THE CANVAS COORDINATE SYSTEM IS USED IS WITH RECT METHODS, ETC.
@@ -22,11 +22,11 @@ var floodTimer=-10;
 //player object
 var Player = function(level) {
     //movement variables
-    this.x = 20; //inital values of spawn (top left of the player)
-    this.y = 20;
+    this.x = 700; //inital values of spawn (top left of the player)
+    this.y = 40;
     this.dx = 0;
     this.dy = 0;
-    this.maxSpeed = 5;
+    this.maxSpeed = 3;
     this.jumpStrength = 7;
     this.airborne = true;
     this.width = 20;
@@ -50,7 +50,7 @@ var Player = function(level) {
             this.airborne = false;
         }
         //ceiling
-        if (this.y > level.height) this.y = level.height; 
+        //if (this.y > level.height) this.y = level.height; 
 
         //change velocity according to acceleration
         this.dy -= gravity;
@@ -62,6 +62,7 @@ var Player = function(level) {
         if (inputs.right) this.dx = this.maxSpeed;
         if (!inputs.left && !inputs.right) this.dx = 0;
         if (inputs.up && !this.airborne) {
+            playSound("jump", "once");
             this.dy = this.jumpStrength;
             this.airborne = true;
         }
@@ -110,7 +111,7 @@ var Camera = {
 
 //obstacle
 var Obbi = function(x, y, width, height) {
-    this.x = x;
+    this.x = x;//top left of obstacle
     this.y = y;
     this.width = width;
     this.height = height;
@@ -118,17 +119,25 @@ var Obbi = function(x, y, width, height) {
     //this.anchored = false;
     this.render = function () {
         this.cameraYOffset = Camera.y - this.y; //dist b/t camera and obbi
-        if (this.cameraYOffset <= CANVAS_HEIGHT && this.cameraYOffset > 0) {//if the obbi is in the range of the camera, render it
+        if (intersect(this.y - this.height, this.y, Camera.y - CANVAS_HEIGHT, Camera.y)) {//if the obbi is in the range of the camera, render it
             ctx.fillStyle = "#000000";
             ctx.beginPath();
-            ctx.rect(this.x, this.cameraYOffset, this.width, this.height);
+
+            var ptrn = ctx.createPattern(document.querySelector('#woodtexture'), 'repeat');
+            ctx.fillStyle = ptrn;
+            ctx.rect(this.x, Math.max(0, this.cameraYOffset), this.width, Math.min(this.height + Math.min(0, this.cameraYOffset), CANVAS_HEIGHT));
+            //Math.max(0, this.cameraYOffset): if the top of the obbi is above the camera, truncate the y coordinate where the obbi starts so it fits
+            //this.height + Math.min(0, this.cameraYOffset): if there was no truncation, then the height would be the full thing
+            //                                               if there was truncation, shave off some of the height (cameraYOffset would be a negative # here)
+            //Math.min(this.height + Math.min(0, this.cameraYOffset), CANVAS_HEIGHT)): if the total height ends up being too much, just make it the canvas height
             ctx.fill();
         }
     };
 
     //determines the direction that the platform is in from the player's perspective
     this.checkDirection = function(player) { //returns left, right, up, down, or ibbixyzzy
-        if (intersect(player.y, player.y + player.height, this.y, this.y + this.height)) { //if the y ranges intersect
+        if (intersect(player.y - 0.5 * player.height, player.y + 0.5 * player.height,
+                this.y - this.height - 0.5 * player.height, this.y - 0.5 * player.height)) { //if the y ranges intersect
             //further testing for left or right
             if (player.x + player.width >= this.x && player.x < this.x) //if the right side of the player is left of the left of the obbi
                 return "right"; //then the obbi is right from the player
@@ -146,55 +155,87 @@ var Obbi = function(x, y, width, height) {
         //BUG: collision "works" but distance to the platform isn't being considered: if you're above the platform, you can't move down regardless of touching it, and etc.
     };
 };
-
-//level
-var Level = function() {
+var Level = function(y) {
     // max size of world
     this.width = 800;
-    this.height = 10000;
+    this.height = 40;
+    this.bottom = y;
     this.obbies = [
         new Obbi(0, 0, 800, 20),
-        new Obbi(0, 0, 20,  10000),
-        // new Obbi(200, 30, 600, 20),
-        // new Obbi(300, 130, 600, 20),
-        // new Obbi(400, 230, 600, 20),
-        // new Obbi(500, 330, 600, 20),
-        // new Obbi(600, 430, 600, 20),
-        // new Obbi(700, 530, 600, 20),
-        // new Obbi(0, 630, 600, 20),
-        // new Obbi(0, 730, 500, 20),
-        // new Obbi(0, 830, 400, 20),
-        // new Obbi(0, 930, 300, 20),
-        // new Obbi(0, 1030, 200, 20),
-        // new Obbi(0, 1130, 100, 20),
-        // new Obbi(200, 1230, 600, 20),
-        // new Obbi(300, 1330, 600, 20),
-        // new Obbi(400, 1430, 600, 20),
-        // new Obbi(500, 1530, 600, 20),
-        // new Obbi(600, 1630, 600, 20),
-        // new Obbi(700, 1730, 600, 20),
-        // new Obbi(0, 1830, 600, 20),
-        // new Obbi(0, 1930, 500, 20),
-        // new Obbi(0, 2030, 400, 20),
-        // new Obbi(0, 2130, 300, 20),
-        // new Obbi(0, 2230, 200, 20),
-        // new Obbi(0, 2330, 100, 20),
-        // new Obbi(200, 2430, 600, 20),
-        // new Obbi(300, 2530, 600, 20),
-        // new Obbi(400, 2630, 600, 20),
-        // new Obbi(500, 2730, 600, 20),
-        // new Obbi(600, 2830, 600, 20),
-        // new Obbi(700, 2930, 600, 20),
-        // new Obbi(0, 3030, 600, 20),
-        // new Obbi(0, 3130, 500, 20),
-        // new Obbi(0, 3230, 400, 20),
-        // new Obbi(0, 3330, 300, 20),
-        // new Obbi(0, 3430, 200, 20),
-        // new Obbi(0, 3530, 100, 20),
-
-
 
     ];
+
+    for (var i = 0; i < this.obbies.length; i++) {
+        this.obbies[i].y += this.bottom;
+    }
+
+};
+
+//level
+var Level1 = function(y) {
+    // max size of world
+    this.width = 800;
+    this.height = 800;
+    this.bottom = y;
+    this.obbies = [
+        new Obbi(0, 10000, 20, 10000),
+        new Obbi(780, 10000, 20, 10000),
+
+        //
+        new Obbi(000, 100, 700, 020),
+        new Obbi(680, 400,  20, 300),
+        new Obbi(680, 150,  60, 020),
+        new Obbi(740, 300,  60, 020),
+        new Obbi(400, 200, 300, 020),
+        new Obbi(000, 350, 300, 020),
+        new Obbi(275, 500, 525, 020),
+        new Obbi(150, 650,  20, 200),
+        new Obbi(350, 700,  20, 150),
+        new Obbi(500, 700,  20, 200),
+        new Obbi(680, 700,  20, 100),
+        new Obbi(600, 600, 100, 020),
+        new Obbi(000, 800, 700, 020),
+
+    ];
+
+    for (var i = 0; i < this.obbies.length; i++) {
+        this.obbies[i].y += this.bottom;
+    }
+
+};
+
+//level
+var Level2 = function(y) {
+    // max size of world
+    this.width = 800;
+    this.height = 800;
+    this.bottom = y;
+    this.obbies = [
+        new Obbi(0, 10000, 20, 10000),
+        new Obbi(780, 10000, 20, 10000),
+
+        //
+        //new Obbi(240, 800, 20, 10000),
+        new Obbi(780, 10000, 20, 10000),
+        new Obbi(000, 100, 700, 020),
+        new Obbi(680, 400,  20, 300),
+        new Obbi(680, 150,  60, 020),
+        new Obbi(740, 300,  60, 020),
+        new Obbi(400, 200, 300, 020),
+        new Obbi(000, 350, 300, 020),
+        new Obbi(275, 500, 525, 020),
+        new Obbi(150, 650,  20, 200),
+        new Obbi(350, 700,  20, 150),
+        new Obbi(500, 700,  20, 200),
+        new Obbi(680, 700,  20, 100),
+        new Obbi(600, 600, 100, 020),
+        new Obbi(000, 800, 700, 020),
+
+    ];
+
+    for (var i = 0; i < this.obbies.length; i++) {
+        this.obbies[i].y += this.bottom;
+    }
 
 };
 
@@ -204,6 +245,19 @@ function intersect(p1, p2, q1, q2) {
     return false;
 }
 
+var first = true;
+function generateTiles(y) {
+    // randomly generate a level and return
+    if (first) {
+        first = false;
+        return new Level1(y);
+    }
+    return random([new Level1(y), new Level2(y)]);
+}
+
+function random(list) {
+    return list[Math.trunc(Math.random() * list.length)];
+}
 
 // moving polygon collisions
 {
@@ -219,14 +273,16 @@ function init() {
     AudioContext = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContext();
     initializeSounds();
-    level = new Level();
+    level = new Level(0);
     player = new Player(level);
 
 
-    floodTimer=-10;
+    floodTimer = -30;
 }
 
 var bgm = false;
+var tileHeight = 0;
+var levels = [new Level(0)];
 function render() {
     window.cancelAnimationFrame(requestID);
     if (!bgm) {
@@ -234,25 +290,31 @@ function render() {
         bgm = true;
     }
     // clear canvas
-    ctx.fillStyle = canvasFillColor;
+    /*ctx.fillStyle = canvasFillColor;
     ctx.beginPath();
     ctx.rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    ctx.fill();
+    ctx.fill();*/
+    ctx.drawImage(document.querySelector("#forestbg"), 0, 0, 800, 800);
 
     // update player state through inputs
     player.inputUpdate();
 
     // update player state through physics
 
+    if (tileHeight < player.y + CANVAS_HEIGHT * 2) {
+        levels.push(generateTiles(tileHeight));
+        tileHeight += levels[levels.length - 1].height;
+    }
     // update obstacles state if necessary
 
     // move the player
         // check for collisions through the path
             // if so, deflect the path of the player using projections
             // if the player's startpoint endpoint is in the object, do something to get the player unstuck
-    for (var i = 0; i < level.obbies.length; i++) {
-        player.updateCollision(level.obbies[i]);  
-    } //loop through onCameraObbies eventually
+    for (var i = 0; i < levels.length; i++)
+        for (var j = 0; j < levels[i].obbies.length; j++)
+            player.updateCollision(levels[i].obbies[j]); 
+     //loop through onCameraObbies eventually
     player.move();
     
     // update the camera
@@ -260,42 +322,55 @@ function render() {
 
     // render the player and obstacles
     player.render();
-    for (var i = 0; i < level.obbies.length; i++) {
-        level.obbies[i].render();
-    }
-
+    for (var i = 0; i < levels.length; i++)
+        for (var j = 0; j < levels[i].obbies.length; j++)
+           levels[i].obbies[j].render();
     // play the sounds
-    //playSounds();
+    playSounds();
+
+    for (var i = 0; i < levels.length;) {
+        if (levels[i].bottom + levels[i].height < 0 - (floodTimer-(player.y-CANVAS_HEIGHT/2))) {
+            levels.splice(i, 1);
+            console.log("unloaded");
+        }
+        else i++;
+    }
     
-    if (floodTimer > player.y-400) { //if flood reaches screen
+    if (floodTimer > player.y-CANVAS_HEIGHT/2) { //if flood reaches screen
         //"water"
         ctx.beginPath();
         ctx.fillStyle="#ADD8E6";
-        ctx.fillRect(0, 800-(floodTimer-(player.y-400)), 800, 800-(floodTimer-(player.y-400)));
+        ctx.fillRect(0, CANVAS_HEIGHT-(floodTimer-(player.y-CANVAS_HEIGHT/2)), CANVAS_WIDTH, CANVAS_HEIGHT-(floodTimer-(player.y-CANVAS_HEIGHT/2)));
         ctx.stroke();
 
         //top of water
         ctx.beginPath();
-        ctx.moveTo(0, 800-(floodTimer-(player.y-400)));
-        ctx.lineTo(800, 800-(floodTimer-(player.y-400)));
+        ctx.moveTo(0, CANVAS_HEIGHT-(floodTimer-(player.y-CANVAS_HEIGHT/2)));
+        ctx.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT-(floodTimer-(player.y-CANVAS_HEIGHT/2)));
         ctx.lineWidth=5;
         ctx.strokeStyle="#0000FF";
         ctx.stroke();
     }
     
 
-    floodTimer+=0.0;//flood rising rate
+    floodTimer+=0.4;//flood rising rate
 
     if (player.y <= floodTimer) {//if player drowns
         var img = document.getElementById("gameover");
         ctx.drawImage(img, 0, 0);
+
+        posY=Math.trunc(player.y); //record player y pos before resetting
+
         document.getElementById("startStop").click();
         stopped=true;
         document.getElementById("init").click();
-        yPos = player.y;
-        console.log(yPos);
-        //document.getElementById("submitScore").submit();
+        floodTimer = -100000000; //set flood below player so form is submitted only once
+        
+        document.getElementById("playerScore").value=posY;
+        console.log(document.getElementById("playerScore"));
+        document.getElementById("submitScore").submit();
     }
+
     //console.log("floodTimer= "+floodTimer);
     //console.log("player y = "+player.y);
     //console.log(stopped);

@@ -56,36 +56,38 @@ def root():
 
     if "checkHighScore" in session:#check is high score is great enough to be added to high score table
         session.pop("checkHighScore")
+        checkThisScore = session["score"]
+        session.pop("score")
         for x in highScores:
-            print("Username: " + str(x[1]) + "| Score: " + str(x[0]))
-            print("score", session["score"]);
-            if x[0] < int(session["score"]):#if old score in table less than new score
-                print("The old score " + str(x[0]) + " is less than the new score " + str(session["score"]))
+            #print("Username: " + str(x[1]) + "| Score: " + str(x[0]))
+            #print("score", checkThisScore);
+            if x[0] < int(checkThisScore):#if old score in table less than new score
+                #print("The old score " + str(x[0]) + " is less than the new score " + str(checkThisScore))
                 if "username" in session:
-                    db.addHighScore(str(session["username"]), int(session["score"]))#add new score
+                    db.addHighScore(str(session["username"]), int(checkThisScore))#add new score
                     db.popMinHS()#remove lowest score
                     highScores=list(db.getHighScores()) #get new updated scores
                     break
                 else:
-                    db.addHighScore("Guest" + str(db.counter), int(session["score"]))
+                    db.addHighScore("Guest" + str(db.counter), int(checkThisScore))
                     db.counter += 1#keep guestids unique
                     db.popMinHS()
                     highScores=list(db.getHighScores()) #get new updated scores
                     break 
-            else:
-                print("The old score " + str(x[0]) + " is greater than the new score " + str(session["score"]))
+            #else:
+                #print("The old score " + str(x[0]) + " is greater than the new score " + str(checkThisScore))
 
         if "username" in session:        
-            db.addScore(un, int(session["score"]))
+            db.addScore(un, int(checkThisScore))
             userHighScores = db.getUserInfo(un)[2].split("~") #get new updated scores
-        session.pop("score")
 
     highScores2 = sorted(highScores, key=lambda x: x[0])[::-1] #sorted database
-    userHighScores2 = sorted(userHighScores[1:], key=lambda x: x[0])[::-1]
+    userHighScores2 = sorted(userHighScores[1:], key=lambda x: int(x))[::-1]
     
-    print("User high scores: " + str(userHighScores))
+    print("User high scores: " + str(userHighScores2))
+    print("All time high scores: " + str(highScores2))
 
-    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg, highScores=highScores2, userHighScores=userHighScores2)
+    return render_template("home.html", loggedIn = loggedIn, un=un, success_msg=success_msg, error_msg=error_msg, highScores=highScores2, userHighScores2=userHighScores2)
 
 #login submit route handles the form submission from pressing the login button on the login page
 @app.route("/login-submit", methods=["POST"])
@@ -156,7 +158,7 @@ def logout():
 @app.route("/newScore", methods=["GET", "POST"])
 def checkNewScore(): #game ended, check if score should be added to hiscore table
     session["checkHighScore"] = "true"
-    session["score"] = request.form["score"]
+    session["score"] = request.form["playerScore"]
     print("score", session["score"])
     return redirect("/")
 

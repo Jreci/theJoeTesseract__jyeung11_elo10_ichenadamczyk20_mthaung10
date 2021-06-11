@@ -133,13 +133,30 @@ ericL, ianC -- 2021-06-06 22:30
 
 jessicaY -- 2021-06-10 19:59
     - flood now working! is offscreen if flood height hasn't reached player 
+    - score now submitted when player dies equal to player's height
+    - added some instructions 
+
+ericL, ianC -- 2021-06-10 21:17
+    - modified collision rules and object rendering rules to account for canvas's upsidedown y axis (height extends downwards)
+    - fixing collision for thin walls kind of. you can clip to the top of a platform if you're within half a player height and you run up against it, think of it as an intentional edge grap
+    - fixed rendering of tall walls
+
+michelleT -- 2021-06-10 22:48
+	- created a new timer that is more accurate since it is based on clock time and not intervals in js
+	- three hours of pain because one word messed up the code every time and made everything break ;( but thanks to ian for making this finally work
+
+ericL -- 2021-06-10 22:15
+    - built the first level
+
+ianC -- 2021-06-10 23:00
+    - set up general level loading and unloading
+
+jessicaY -- 2021-06-11 
+    - high scores now work again (thanks ian for pointing out that player.y reset upon dying and reloading the game ahaha)
+    - user high scores now work; made mistake of coding as if they were stored the same as scores for all time high scores
+    
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
- 
-TO DO (updated for may 30)
-- timer on screen that runs when start is pressed and stops when stop is pressed (Mich)
-    - score related to timing
--get bootstrap to work : ( lol never sad PLEASE WORK PLEASE PLEASE 
 
