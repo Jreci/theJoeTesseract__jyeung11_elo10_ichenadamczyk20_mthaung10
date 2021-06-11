@@ -126,10 +126,13 @@ michelleT -- 2021-06-06 22:30
     
 ericL, ianC -- 2021-06-06 22:30
     - flipped the coordinate system of the entire game, decoupled it from the canvas coordinates in order to not be upside down
-    - implemented camera tracking feature to follow the player, made obstacles dynamically move around the player instead of the player moving around obbies
-    - fixed bugs that came with flipping the coordiante system
+    - implemented camera tracking feature to follow the player, made obstacles dynamically move around the player instead of the player moving around obbies (this was mad hard)
+    - fixed bugs that came with flipping the coordinate system
     
 --------------------------------------------------------------
+
+jessicaY -- 2021-06-10 19:59
+    - flood now working! is offscreen if flood height hasn't reached player 
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------

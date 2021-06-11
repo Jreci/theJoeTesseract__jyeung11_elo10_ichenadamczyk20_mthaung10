@@ -58,6 +58,7 @@ def root():
         session.pop("checkHighScore")
         for x in highScores:
             print("Username: " + str(x[1]) + "| Score: " + str(x[0]))
+            print("score", session["score"]);
             if x[0] < int(session["score"]):#if old score in table less than new score
                 print("The old score " + str(x[0]) + " is less than the new score " + str(session["score"]))
                 if "username" in session:
@@ -156,7 +157,7 @@ def logout():
 def checkNewScore(): #game ended, check if score should be added to hiscore table
     session["checkHighScore"] = "true"
     session["score"] = request.form["score"]
-    print(session["score"])
+    print("score", session["score"])
     return redirect("/")
 
 if __name__ == "__main__":

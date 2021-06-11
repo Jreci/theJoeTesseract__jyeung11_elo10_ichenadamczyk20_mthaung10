@@ -14,7 +14,7 @@ var gravity = 0.2;
 var friction = 0.7;
 var airResistance = 0.1;
 
-var floodTimer=0;
+var floodTimer=-10;
 
 //ALL X AND Y COORDINATES FOR CAMERA, PLAYER, AND OBBI ARE ON THE FIRST QUADRANT OF A NORMAL CARTESIAN PLANE.
 //THE ONLY PLACES WHERE THE CANVAS COORDINATE SYSTEM IS USED IS WITH RECT METHODS, ETC.
@@ -154,42 +154,43 @@ var Level = function() {
     this.height = 10000;
     this.obbies = [
         new Obbi(0, 0, 800, 20),
-        new Obbi(200, 30, 600, 20),
-        new Obbi(300, 130, 600, 20),
-        new Obbi(400, 230, 600, 20),
-        new Obbi(500, 330, 600, 20),
-        new Obbi(600, 430, 600, 20),
-        new Obbi(700, 530, 600, 20),
-        new Obbi(0, 630, 600, 20),
-        new Obbi(0, 730, 500, 20),
-        new Obbi(0, 830, 400, 20),
-        new Obbi(0, 930, 300, 20),
-        new Obbi(0, 1030, 200, 20),
-        new Obbi(0, 1130, 100, 20),
-        new Obbi(200, 1230, 600, 20),
-        new Obbi(300, 1330, 600, 20),
-        new Obbi(400, 1430, 600, 20),
-        new Obbi(500, 1530, 600, 20),
-        new Obbi(600, 1630, 600, 20),
-        new Obbi(700, 1730, 600, 20),
-        new Obbi(0, 1830, 600, 20),
-        new Obbi(0, 1930, 500, 20),
-        new Obbi(0, 2030, 400, 20),
-        new Obbi(0, 2130, 300, 20),
-        new Obbi(0, 2230, 200, 20),
-        new Obbi(0, 2330, 100, 20),
-        new Obbi(200, 2430, 600, 20),
-        new Obbi(300, 2530, 600, 20),
-        new Obbi(400, 2630, 600, 20),
-        new Obbi(500, 2730, 600, 20),
-        new Obbi(600, 2830, 600, 20),
-        new Obbi(700, 2930, 600, 20),
-        new Obbi(0, 3030, 600, 20),
-        new Obbi(0, 3130, 500, 20),
-        new Obbi(0, 3230, 400, 20),
-        new Obbi(0, 3330, 300, 20),
-        new Obbi(0, 3430, 200, 20),
-        new Obbi(0, 3530, 100, 20),
+        new Obbi(0, 0, 20,  10000),
+        // new Obbi(200, 30, 600, 20),
+        // new Obbi(300, 130, 600, 20),
+        // new Obbi(400, 230, 600, 20),
+        // new Obbi(500, 330, 600, 20),
+        // new Obbi(600, 430, 600, 20),
+        // new Obbi(700, 530, 600, 20),
+        // new Obbi(0, 630, 600, 20),
+        // new Obbi(0, 730, 500, 20),
+        // new Obbi(0, 830, 400, 20),
+        // new Obbi(0, 930, 300, 20),
+        // new Obbi(0, 1030, 200, 20),
+        // new Obbi(0, 1130, 100, 20),
+        // new Obbi(200, 1230, 600, 20),
+        // new Obbi(300, 1330, 600, 20),
+        // new Obbi(400, 1430, 600, 20),
+        // new Obbi(500, 1530, 600, 20),
+        // new Obbi(600, 1630, 600, 20),
+        // new Obbi(700, 1730, 600, 20),
+        // new Obbi(0, 1830, 600, 20),
+        // new Obbi(0, 1930, 500, 20),
+        // new Obbi(0, 2030, 400, 20),
+        // new Obbi(0, 2130, 300, 20),
+        // new Obbi(0, 2230, 200, 20),
+        // new Obbi(0, 2330, 100, 20),
+        // new Obbi(200, 2430, 600, 20),
+        // new Obbi(300, 2530, 600, 20),
+        // new Obbi(400, 2630, 600, 20),
+        // new Obbi(500, 2730, 600, 20),
+        // new Obbi(600, 2830, 600, 20),
+        // new Obbi(700, 2930, 600, 20),
+        // new Obbi(0, 3030, 600, 20),
+        // new Obbi(0, 3130, 500, 20),
+        // new Obbi(0, 3230, 400, 20),
+        // new Obbi(0, 3330, 300, 20),
+        // new Obbi(0, 3430, 200, 20),
+        // new Obbi(0, 3530, 100, 20),
 
 
 
@@ -222,7 +223,7 @@ function init() {
     player = new Player(level);
 
 
-    floodTimer=0;
+    floodTimer=-10;
 }
 
 var bgm = false;
@@ -265,30 +266,39 @@ function render() {
 
     // play the sounds
     //playSounds();
+    
+    if (floodTimer > player.y-400) { //if flood reaches screen
+        //"water"
+        ctx.beginPath();
+        ctx.fillStyle="#ADD8E6";
+        ctx.fillRect(0, 800-(floodTimer-(player.y-400)), 800, 800-(floodTimer-(player.y-400)));
+        ctx.stroke();
 
-    // ctx.beginPath();
-    // ctx.fillStyle="#ADD8E6";
-    // ctx.fillRect(0, 800-floodTimer, 800, 800-floodTimer);
-    // ctx.stroke();
+        //top of water
+        ctx.beginPath();
+        ctx.moveTo(0, 800-(floodTimer-(player.y-400)));
+        ctx.lineTo(800, 800-(floodTimer-(player.y-400)));
+        ctx.lineWidth=5;
+        ctx.strokeStyle="#0000FF";
+        ctx.stroke();
+    }
+    
 
-    // ctx.beginPath();
-    // ctx.moveTo(0, 800-floodTimer);
-    // ctx.lineTo(800, 800-floodTimer);
-    // ctx.lineWidth=5;
-    // ctx.strokeStyle="#0000FF";
-    // ctx.stroke();
-    // floodTimer+=0.1;
+    floodTimer+=0.0;//flood rising rate
 
-    // if (800-player.y <= floodTimer) {
-    //     document.getElementById("startStop").click();
-    //     stopped=true;
-    //     document.getElementById("init").click();
-    //     var img = document.getElementById("gameover");
-    //     ctx.drawImage(img, 0, 0);
-    // }
-    // console.log("floodTimer= "+floodTimer);
-    console.log("player y = "+player.y);
-    // console.log(stopped);
+    if (player.y <= floodTimer) {//if player drowns
+        var img = document.getElementById("gameover");
+        ctx.drawImage(img, 0, 0);
+        document.getElementById("startStop").click();
+        stopped=true;
+        document.getElementById("init").click();
+        yPos = player.y;
+        console.log(yPos);
+        //document.getElementById("submitScore").submit();
+    }
+    //console.log("floodTimer= "+floodTimer);
+    //console.log("player y = "+player.y);
+    //console.log(stopped);
 
     requestID = window.requestAnimationFrame(render); 
 };

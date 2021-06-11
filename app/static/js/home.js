@@ -10,14 +10,14 @@ var toggle = function() {
         stopped = true;
 		s.innerHTML = "Start";
         stopRender();
-		reset();
+		//reset();
         i.disabled = false;
     }
     else {
         stopped = false;
 		s.innerHTML = "Stop";
         render();
-		timer();
+		//timer();
         i.disabled = true;
     }
 }
@@ -36,56 +36,7 @@ var toggleInit = function() {
 i.addEventListener("click", enableStart); 
 i.addEventListener("click", toggleInit);
 
-//timerOn initially false, when start button is clicked timerOn changes to true and all the other time fxns are called
-var timer = function() {
-	if (timerOn == false) {
-		timerOn = true;
-		runTimer();
-	}
-	else {
-		timerOn = false;
-	}
-}
-
-//is the actual main timer running function
-var runTimer = function() {
-	if (timerOn) {
-		var timerID = setInterval(incTimer, 100);
-	}
-}
-
-//increment timer
-var incTimer = function() {
-	time++; 
-	var min = Math.floor(time/600);
-	var sec = Math.floor(time/10 % 60);
-	var milli = time % 10;
-
-	//if less than 10, will add a 0 in front: ie. instead of 9, it will be 09
-	if (min < 10) {
-		min = "0" + min; 
-	}
-	if (sec < 10) {
-		sec = "0" + sec;
-	}
-	//only every ten millisec shows ;-;
-	if (milli < 10) {
-		milli = milli + "0";
-	}
-
-	document.getElementById("timer").innerHTML = min + ":" + sec + ":" + milli;
-}
-
-//IT RESETS THE TIMER TO 00:00:00 BUT IT DOESN'T WANNA STOP AHHHHHH
-var reset = function() {
-	timerOn = false;
-	time = 0;
-	document.getElementById("timer").innerHTML = "00:00:00";
-	clearInterval(timerID); //ik this line is prob wrong but wot i needa change : (
-}
-
-s.addEventListener("click", timer);
-s.addEventListener("click", reset);
+//timer goes here
 
 
 document.querySelector("#init").addEventListener("click", init);

@@ -199,8 +199,13 @@
 
 
     <!--SCORE TESTING STUFF HERE-->
-    <form action="/newScore" method="POST">
-        <input type="number" name="score" id="score" style="width:100px"/>
+    <form id="submitScore" action="/newScore" method="POST">
+        <input type="hidden" name="score" id="score">
+        <script>
+            console.log()
+            document.querySelector('#score').value = 3//document.getElementById("yPos")
+        </script>
+        <!--<input type="number" name="score" id="score" style="width:100px"/>-->
         <button type="submit">Submit score</button>
     </form>
     <!--SCORE TESTING STUFF HERE-->
