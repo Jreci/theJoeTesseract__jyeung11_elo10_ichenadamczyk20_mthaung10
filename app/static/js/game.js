@@ -14,15 +14,26 @@ var gravity = 0.2;
 var friction = 0.7;
 var airResistance = 0.1;
 
-var floodTimer=-30;
+var floodTimer=-100;
 
 //ALL X AND Y COORDINATES FOR CAMERA, PLAYER, AND OBBI ARE ON THE FIRST QUADRANT OF A NORMAL CARTESIAN PLANE.
 //THE ONLY PLACES WHERE THE CANVAS COORDINATE SYSTEM IS USED IS WITH RECT METHODS, ETC.
-
+function submitThis(form) {
+    if (window.XMLHttpRequest) {
+        //Firefox, Opera, IE7, and other browsers will use the native object
+        var xhttp = new XMLHttpRequest();
+    } else {
+        //IE 5 and 6 will use the ActiveX control
+        var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhttp.open(form.method, form.action, true); //sends form to the form action by form method
+    var data = new FormData(form); //gets the form's data
+    xhttp.send(data); //sends the form's data
+};
 //player object
 var Player = function(level) {
     //movement variables
-    this.x = 700; //inital values of spawn (top left of the player)
+    this.x = 400; //inital values of spawn (top left of the player)
     this.y = 40;
     this.dx = 0;
     this.dy = 0;
@@ -178,23 +189,24 @@ var Level1 = function(y) {
     this.height = 800;
     this.bottom = y;
     this.obbies = [
-        new Obbi(0, 10000, 20, 10000),
-        new Obbi(780, 10000, 20, 10000),
+        new Obbi(0, 800, 20, 800),
+        new Obbi(780, 800, 20, 800),
 
         //
-        new Obbi(000, 100, 700, 020),
+        new Obbi(000, 100, 700,  20),
+        new Obbi(680, 20,  20,  20),
         new Obbi(680, 400,  20, 300),
-        new Obbi(680, 150,  60, 020),
-        new Obbi(740, 300,  60, 020),
-        new Obbi(400, 200, 300, 020),
-        new Obbi(000, 350, 300, 020),
-        new Obbi(275, 500, 525, 020),
+        new Obbi(680, 150,  60,  20),
+        new Obbi(740, 300,  60,  20),
+        new Obbi(400, 200, 300,  20),
+        new Obbi(000, 350, 300,  20),
+        new Obbi(275, 500, 525,  20),
         new Obbi(150, 650,  20, 200),
         new Obbi(350, 700,  20, 150),
         new Obbi(500, 700,  20, 200),
         new Obbi(680, 700,  20, 100),
-        new Obbi(600, 600, 100, 020),
-        new Obbi(000, 800, 700, 020),
+        new Obbi(600, 600, 100,  20),
+        new Obbi(000, 800, 700,  20),
 
     ];
 
@@ -208,28 +220,133 @@ var Level1 = function(y) {
 var Level2 = function(y) {
     // max size of world
     this.width = 800;
-    this.height = 800;
+    this.height = 900;
     this.bottom = y;
     this.obbies = [
-        new Obbi(0, 10000, 20, 10000),
-        new Obbi(780, 10000, 20, 10000),
+        new Obbi(0, 900, 20, 900),
+        new Obbi(780, 900, 20, 900),
 
         //
-        //new Obbi(240, 800, 20, 10000),
-        new Obbi(780, 10000, 20, 10000),
-        new Obbi(000, 100, 700, 020),
-        new Obbi(680, 400,  20, 300),
-        new Obbi(680, 150,  60, 020),
-        new Obbi(740, 300,  60, 020),
-        new Obbi(400, 200, 300, 020),
-        new Obbi(000, 350, 300, 020),
-        new Obbi(275, 500, 525, 020),
-        new Obbi(150, 650,  20, 200),
-        new Obbi(350, 700,  20, 150),
-        new Obbi(500, 700,  20, 200),
-        new Obbi(680, 700,  20, 100),
-        new Obbi(600, 600, 100, 020),
-        new Obbi(000, 800, 700, 020),
+        new Obbi(0, 0, 540,  20),
+        new Obbi(240, 800, 20, 700),
+        new Obbi(240, 800, 560, 20),
+        new Obbi(520, 750, 20, 750),
+        new Obbi(540, 100, 150, 20),
+        new Obbi(540, 230, 220, 20),
+        new Obbi(540, 330, 20, 20),
+        new Obbi(650, 630, 20, 100),
+        new Obbi(650, 430, 20, 150),
+        new Obbi(670, 550, 20, 20),
+        
+        new Obbi(260, 650, 180, 20),
+        new Obbi(360, 300, 180, 20),
+
+        new Obbi(120, 400, 20, 210),
+        new Obbi(140, 248, 20, 20),
+        new Obbi(140, 210, 20.1, 20),
+        new Obbi(80, 100, 20, 20),
+        new Obbi(0, 470, 140, 20),
+        new Obbi(160, 470, 80, 20),
+        new Obbi(40, 540, 20, 20),
+        new Obbi(200, 680, 20, 20),
+
+        new Obbi(760, 900, 20, 20),
+
+    ];
+
+    for (var i = 0; i < this.obbies.length; i++) {
+        this.obbies[i].y += this.bottom;
+    }
+
+};
+
+var Level3 = function(y) {
+    // max size of world
+    this.width = 800;
+    this.height = 1220;
+    this.bottom = y;
+    this.obbies = [
+        new Obbi(0, 1220, 20, 1220),
+        new Obbi(780, 1220, 20, 1220),
+        new Obbi(0, 100, 600, 20),
+        new Obbi(0, 200, 500, 20),
+        new Obbi(0, 300, 400, 20),
+        new Obbi(0, 400, 300, 20),
+        new Obbi(0, 500, 200, 20),
+        new Obbi(0, 600, 100, 20),
+        new Obbi(200, 700, 600, 20),
+        new Obbi(300, 800, 600, 20),
+        new Obbi(400, 900, 600, 20),
+        new Obbi(500, 1000, 600, 20),
+        new Obbi(600, 1100, 600, 20),
+        new Obbi(700, 1200, 600, 20),
+
+    ];
+
+    for (var i = 0; i < this.obbies.length; i++) {
+        this.obbies[i].y += this.bottom;
+    }
+
+};
+
+
+var Level4 = function(y) {
+
+    this.width=800;
+    this.height=820;
+    this.bottom=y;
+    this.obbies = [
+        new Obbi(0, 20, 750, 5),
+
+        new Obbi(700, 60, 100, 20),
+        new Obbi(500, 160, 100, 20),
+        new Obbi(500, 260, 100, 20),
+        new Obbi(500, 360, 100, 20),
+        new Obbi(500, 460, 100, 20),
+
+        new Obbi(480, 500, 20, 485),
+        new Obbi(350, 500, 130, 20),
+
+        new Obbi(100, 570, 20, 500),
+        new Obbi(100, 70, 350, 10),
+        new Obbi(350, 370, 20, 300),
+
+        new Obbi(0, 120, 30, 10),
+        new Obbi(0, 240, 30, 10),
+        new Obbi(0, 360, 30, 10),
+        new Obbi(0, 480, 30, 10),
+        new Obbi(0, 600, 30, 10),
+
+        new Obbi(50, 700, 700, 20),
+        new Obbi(150, 770, 20, 70),
+        new Obbi(250, 815, 20, 45),
+        new Obbi(150, 770, 39, 10),
+        new Obbi(210, 770, 40, 10),
+        new Obbi(650, 770, 20, 70),
+
+        new Obbi(0, 820, 750, 5),
+        
+    ];
+
+    for (var i = 0; i < this.obbies.length; i++) {
+        this.obbies[i].y += this.bottom;
+    }
+}
+
+var LevelStart = function(y) {
+    // max size of world
+    this.width = 800;
+    this.height = 650;
+    this.bottom = y;
+    this.obbies = [
+        new Obbi(0, 650, 20, 650),
+        new Obbi(780, 650, 20, 650),
+        new Obbi(180, 100, 200, 20),
+        new Obbi(480, 200, 200, 20),
+        new Obbi(180, 300, 200, 20),
+        new Obbi(480, 400, 200, 20),
+        new Obbi(180, 500, 200, 20),
+        new Obbi(480, 600, 200, 20),
 
     ];
 
@@ -250,9 +367,9 @@ function generateTiles(y) {
     // randomly generate a level and return
     if (first) {
         first = false;
-        return new Level1(y);
+        return new LevelStart(y);
     }
-    return random([new Level1(y), new Level2(y)]);
+    return random([new Level4(y), new Level3(y), new Level2(y), new Level1(y)]);
 }
 
 function random(list) {
@@ -269,22 +386,37 @@ function random(list) {
     // figure out how to pause the game and stuff idrk
 }
 
+
+var elapsed;
+var fpsInterval;
+var thenFPS;
+
 function init() {
     AudioContext = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContext();
     initializeSounds();
     level = new Level(0);
     player = new Player(level);
+    floodTimer=-100;
+    fpsInterval = 1000 / 60;
+    thenFPS = Date.now();
 
-
-    floodTimer = -30;
 }
 
 var bgm = false;
 var tileHeight = 0;
 var levels = [new Level(0)];
+
 function render() {
     window.cancelAnimationFrame(requestID);
+    var now = Date.now();
+    elapsed = now - thenFPS;
+    console.log(elapsed);
+    if (elapsed < fpsInterval) {
+        requestID = window.requestAnimationFrame(render);
+        return;
+    }
+    thenFPS = now - (elapsed % fpsInterval);
     if (!bgm) {
         playSound("bgm", "loop");
         bgm = true;
@@ -329,7 +461,7 @@ function render() {
     playSounds();
 
     for (var i = 0; i < levels.length;) {
-        if (levels[i].bottom + levels[i].height < 0 - (floodTimer-(player.y-CANVAS_HEIGHT/2))) {
+        if (levels[i].bottom + levels[i].height < - (floodTimer-(player.y-CANVAS_HEIGHT/2)) - CANVAS_HEIGHT) {
             levels.splice(i, 1);
             console.log("unloaded");
         }
@@ -338,10 +470,11 @@ function render() {
     
     if (floodTimer > player.y-CANVAS_HEIGHT/2) { //if flood reaches screen
         //"water"
-        ctx.beginPath();
+        /*ctx.beginPath();
         ctx.fillStyle="#ADD8E6";
         ctx.fillRect(0, CANVAS_HEIGHT-(floodTimer-(player.y-CANVAS_HEIGHT/2)), CANVAS_WIDTH, CANVAS_HEIGHT-(floodTimer-(player.y-CANVAS_HEIGHT/2)));
-        ctx.stroke();
+        ctx.stroke();*/
+        ctx.drawImage(document.querySelector("#flood"), 0, CANVAS_HEIGHT-(floodTimer-(player.y-CANVAS_HEIGHT/2)), CANVAS_WIDTH, CANVAS_WIDTH);
 
         //top of water
         ctx.beginPath();
@@ -353,8 +486,9 @@ function render() {
     }
     
 
-    floodTimer+=0.4;//flood rising rate
+    floodTimer+=0.7;//flood rising rate
 
+    requestID = window.requestAnimationFrame(render);
     if (player.y <= floodTimer) {//if player drowns
         var img = document.getElementById("gameover");
         ctx.drawImage(img, 0, 0);
@@ -364,18 +498,20 @@ function render() {
         document.getElementById("startStop").click();
         stopped=true;
         document.getElementById("init").click();
+        document.getElementById("startStop").disabled = true;
+        document.getElementById("init").disabled = false;
         floodTimer = -100000000; //set flood below player so form is submitted only once
         
         document.getElementById("playerScore").value=posY;
         console.log(document.getElementById("playerScore"));
+        //submitThis(document.getElementById("submitScore"));
         document.getElementById("submitScore").submit();
     }
 
     //console.log("floodTimer= "+floodTimer);
     //console.log("player y = "+player.y);
     //console.log(stopped);
-
-    requestID = window.requestAnimationFrame(render); 
+ 
 };
 
 function stopRender() {

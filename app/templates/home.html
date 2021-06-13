@@ -30,10 +30,10 @@
 		<b style="color:red;">Error: {{error_msg}}</b><br>
 	{% endif %}
 	{% if success_msg != "" %}
-		<b>{{success_msg}}</b><br>
+		<b style="color:green;">{{success_msg}}</b><br>
 	{% endif %} 
     {% if un != "!DNE" %} <!--Username shows if logged in-->
-        <b>Welcome,</b> {{un}}<br>
+        <b style="color:green;">Welcome, {{un}}</b><br>
     {% endif %}
 
 	<button id="init">Initialize</button>
@@ -186,6 +186,7 @@
     <img id="logo" width="800" height="800" src="/static/images/logo.png" alt="Press initialize to start!" style="display: none"><!--Load image for js to reference but make invisible-->
     <img id="gameover" width="800" height="800" src="/static/images/gameover.jpg" alt="Press initialize to start!" style="display: none">
     <img id="forestbg" width="800" height="800" src="/static/images/bg.jpg" alt="Imagine trees and grass if you can" style="display: none">
+    <img id="flood" width="800" height="800" src="/static/images/flood.jpg" alt="Imagine trees and grass if you can" style="display: none">
     <img id="woodtexture" width="40" height="20" src="/static/images/wood.jpg" alt="This is a wood board" style="display: none"><!--Load image for js to reference but make invisible-->
     <!--Canvas-->
     <canvas id="slate" width="800" height="800">Hi!</canvas>

@@ -70,8 +70,8 @@ def root():
                     break
                 else:
                     db.addHighScore("Guest" + str(db.counter), int(checkThisScore))
-                    db.counter += 1#keep guestids unique
                     db.popMinHS()
+                    db.counter += 1#keep guestids unique
                     highScores=list(db.getHighScores()) #get new updated scores
                     break 
             #else:
@@ -80,6 +80,10 @@ def root():
         if "username" in session:        
             db.addScore(un, int(checkThisScore))
             userHighScores = db.getUserInfo(un)[2].split("~") #get new updated scores
+
+    print("LENGTHHHHHHHHHHHHHH: " + str(len(highScores)))
+    if (len(highScores) < 10):
+        db.addHighScore("An error has occurred!", 0)
 
     highScores2 = sorted(highScores, key=lambda x: x[0])[::-1] #sorted database
     userHighScores2 = sorted(userHighScores[1:], key=lambda x: int(x))[::-1]

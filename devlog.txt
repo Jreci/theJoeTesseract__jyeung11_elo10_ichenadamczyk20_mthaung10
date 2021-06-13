@@ -154,8 +154,18 @@ ianC -- 2021-06-10 23:00
 jessicaY -- 2021-06-11 
     - high scores now work again (thanks ian for pointing out that player.y reset upon dying and reloading the game ahaha)
     - user high scores now work; made mistake of coding as if they were stored the same as scores for all time high scores
+    - can't fix specific problem of what would happen if the lowest score took up numerous positions on the high score table by the same user :(
+
+ianC -- 2021-06-11 02:00
+    - added wonderful visual design aspects to the game
+    - implemented 2 additional levels
+    - set up fps cap
     
 --------------------------------------------------------------
+
+jessicaY -- 2021-06-13 19:22
+    - added fourth level, a little bit harder than the rest of the levels :)
+    
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------

@@ -30,6 +30,7 @@ def createTables():
 if __name__ == "__main__":
     createTables()
     #manager.addHighScore("DUPLICATE", 1)
-    for i in range(10): 
+    for i in range(9): 
         manager.addHighScore("This place has not yet been taken!", i)
+    manager.addHighScore("This place has not yet been taken!", 0)
     

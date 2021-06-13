@@ -70,10 +70,10 @@ def addScore(username: str, score: int):
     scoresAsList = scoresAsStr.split("~")
     scoresAsList2 = scoresAsList[1:]
 
-    lowestScore = min(scoresAsList2)
     #if the user has the max number of scores and the new score beats
     #the lowest existing score, then replace it
     if (len(scoresAsList2) >= 10 and score > int(lowestScore)): 
+        lowestScore = min(scoresAsList2)
         scoresAsList.remove(lowestScore)
         scoresAsList.append(str(score))
     #if the user has less than the max #, just add the new score
@@ -124,8 +124,6 @@ def popMinHS():
                         )"""
     c.execute(command)
     db.commit()
-
-
 
 #================================================================================
 # TEST METHODS
