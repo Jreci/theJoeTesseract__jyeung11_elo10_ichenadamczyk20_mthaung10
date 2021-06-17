@@ -171,8 +171,19 @@ ericL -- 2021-06-13 22:44
     
 --------------------------------------------------------------
 
+jessicaY -- 2021-06-14 20:27
+    - minor bug and level editing
+    - added counter for score update at top by suggestion of Ian
 
+ianC -- 2021-06-14 20:27
+    - added extra animation for every time the user finishes a tile
 
 --------------------------------------------------------------
---------------------------------------------------------------
 
+ericL, jessicaY, ianC -- 2021-06-16 19:59
+    - wrote script
+
+ianC -- 2021-06-16 20:32
+    - wrote java script (dog picture + quote)
+
+--------------------------------------------------------------

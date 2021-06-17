@@ -13,13 +13,13 @@ var soundQueue = {
             url: "/static/sounds/jump.mp3",
             volume: 0.25
         },
-        land: {
-            url: "/static/sounds/land.mp3",
+        level: {
+            url: "/static/sounds/level.mp3",
             volume: 0.25
         },
-        walk: {
-            url: "/static/sounds/walk.mp3",
-            volume: 0.25
+        bark: {
+            url: "/static/sounds/bark.mp3",
+            volume: 2
         },
         bgm: {
             url: "https://ia801905.us.archive.org/7/items/super-mario-64-soundtrack/Super%20Mario%2064%20%28Soundtrack%29/1-02%20Title%20Theme.mp3",

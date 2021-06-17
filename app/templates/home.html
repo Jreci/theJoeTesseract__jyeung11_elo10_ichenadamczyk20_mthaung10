@@ -180,14 +180,19 @@
     </div>
 
 	<div style="text-align: center; color: white;" >
-		<h2 id="timer">00:00:00<h2>
+		<h2 id="timer">00:00:00</h2>
     </div>
+
+    <h2 style="text-align: center; color: white;" id="runningScore">Current score: 0</h2>
 
     <img id="logo" width="800" height="800" src="/static/images/logo.png" alt="Press initialize to start!" style="display: none"><!--Load image for js to reference but make invisible-->
     <img id="gameover" width="800" height="800" src="/static/images/gameover.jpg" alt="Press initialize to start!" style="display: none">
     <img id="forestbg" width="800" height="800" src="/static/images/bg.jpg" alt="Imagine trees and grass if you can" style="display: none">
     <img id="flood" width="800" height="800" src="/static/images/flood.jpg" alt="Imagine trees and grass if you can" style="display: none">
-    <img id="woodtexture" width="40" height="20" src="/static/images/wood.jpg" alt="This is a wood board" style="display: none"><!--Load image for js to reference but make invisible-->
+    <img id="woodtexture" width="40" height="20" src="/static/images/wood.jpg" alt="This is a wood board" style="display: none">
+    <img id="amazing" width="250" height="90" src="/static/images/amazing.png" alt="This is a wood board" style="display: none"><!--Load image for js to reference but make invisible-->
+    <img id="otherThing" style="display:none">
+    <p id="otherThing2" style="display:none"></p>
     <!--Canvas-->
     <canvas id="slate" width="800" height="800">Hi!</canvas>
     <script>

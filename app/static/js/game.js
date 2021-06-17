@@ -186,14 +186,14 @@ var Level = function(y) {
 var Level1 = function(y) {
     // max size of world
     this.width = 800;
-    this.height = 800;
-    this.bottom = y;
+    this.height = 900;
+    this.bottom = y + 75;
     this.obbies = [
-        new Obbi(0, 800, 20, 800),
-        new Obbi(780, 800, 20, 800),
+        new Obbi(0, 825, 20, 900),
+        new Obbi(780, 825, 20, 900),
 
         //
-        new Obbi(000, 100, 700,  20),
+        new Obbi(400, 0, 300,  20),
         new Obbi(680, 20,  20,  20),
         new Obbi(680, 400,  20, 300),
         new Obbi(680, 150,  60,  20),
@@ -220,17 +220,18 @@ var Level1 = function(y) {
 var Level2 = function(y) {
     // max size of world
     this.width = 800;
-    this.height = 900;
-    this.bottom = y;
+    this.height = 875;
+    this.bottom = y + 10;
     this.obbies = [
-        new Obbi(0, 900, 20, 900),
-        new Obbi(780, 900, 20, 900),
+        new Obbi(0, 865, 20, 875),
+        new Obbi(780, 865, 20, 875),
 
         //
         new Obbi(0, 0, 540,  20),
         new Obbi(240, 800, 20, 700),
         new Obbi(240, 800, 560, 20),
         new Obbi(520, 750, 20, 750),
+        new Obbi(580, 0, 60, 20),
         new Obbi(540, 100, 150, 20),
         new Obbi(540, 230, 220, 20),
         new Obbi(540, 330, 20, 20),
@@ -250,8 +251,6 @@ var Level2 = function(y) {
         new Obbi(40, 540, 20, 20),
         new Obbi(200, 680, 20, 20),
 
-        new Obbi(760, 900, 20, 20),
-
     ];
 
     for (var i = 0; i < this.obbies.length; i++) {
@@ -263,11 +262,11 @@ var Level2 = function(y) {
 var Level3 = function(y) {
     // max size of world
     this.width = 800;
-    this.height = 1220;
+    this.height = 1320;
     this.bottom = y;
     this.obbies = [
-        new Obbi(0, 1220, 20, 1220),
-        new Obbi(780, 1220, 20, 1220),
+        new Obbi(0, 1320, 20, 1320),
+        new Obbi(780, 1320, 20, 1320),
         new Obbi(0, 100, 600, 20),
         new Obbi(0, 200, 500, 20),
         new Obbi(0, 300, 400, 20),
@@ -280,7 +279,12 @@ var Level3 = function(y) {
         new Obbi(500, 1000, 600, 20),
         new Obbi(600, 1100, 600, 20),
         new Obbi(700, 1200, 600, 20),
+        new Obbi(50, 1300, 100, 20),
+        new Obbi(250, 1300, 100, 20),
+        new Obbi(450, 1300, 100, 20),
+        new Obbi(650, 1300, 100, 20),
 
+        new Obbi(0, 0, 700, 1),
     ];
 
     for (var i = 0; i < this.obbies.length; i++) {
@@ -443,6 +447,7 @@ function generateTiles(y) {
         first = false;
         return new LevelStart(y);
     }
+    //return new Level4(y);
     return random([new Level5(y), new Level4(y), new Level3(y), new Level2(y), new Level1(y)]);
 }
 
@@ -468,13 +473,18 @@ function init() {
 
 var bgm = false;
 var tileHeight = 0;
+var tileHeights = [];
 var levels = [new Level(0)];
+var eheheheh = -1;
+var showThing = false;
+var tilesCleared = 0;
+var textThing = "";
 
 function render() {
     window.cancelAnimationFrame(requestID);
     var now = Date.now();
     elapsed = now - thenFPS;
-    console.log(elapsed);
+    //console.log(elapsed);
     if (elapsed < fpsInterval) {
         requestID = window.requestAnimationFrame(render);
         return;
@@ -498,8 +508,33 @@ function render() {
     if (tileHeight < player.y + CANVAS_HEIGHT * 2) {
         levels.push(generateTiles(tileHeight));
         tileHeight += levels[levels.length - 1].height;
+        tileHeights.push(tileHeight);
     }
-    // update obstacles state if necessary
+
+    if (player.y > tileHeights[0]) {
+        tileHeights.splice(0, 1);
+        eheheheh = 0;
+        playSound("level", "once");
+        tilesCleared++;
+        if (tilesCleared % 3 == 0) {
+            loadThing();
+            textThing = loadOtherThing(ctx);
+            showThing = true;
+            playSound("bark", "once");
+        } else {
+            showThing = false;
+        }
+    }
+
+    if (eheheheh >= 0) {
+        if (eheheheh % 60 <= 30 && eheheheh <= 180) {
+            ctx.drawImage(document.querySelector("#amazing"), 0 + 100 * (eheheheh % 2 * 0.5), 0 + eheheheh * 2, 800, 300);
+        }
+        eheheheh += 1;
+        if (eheheheh >= 300) {
+            eheheheh = -1;
+        }
+    }
 
     // move the player
         // check for collisions through the path
@@ -525,7 +560,7 @@ function render() {
     for (var i = 0; i < levels.length;) {
         if (levels[i].bottom + levels[i].height < - (floodTimer-(player.y-CANVAS_HEIGHT/2)) - CANVAS_HEIGHT) {
             levels.splice(i, 1);
-            console.log("unloaded");
+            //console.log("unloaded");
         }
         else i++;
     }
@@ -565,7 +600,7 @@ function render() {
         floodTimer = -100000000; //set flood below player so form is submitted only once
         
         document.getElementById("playerScore").value=posY;
-        console.log(document.getElementById("playerScore"));
+        //console.log(document.getElementById("playerScore"));
         //submitThis(document.getElementById("submitScore"));
         document.getElementById("submitScore").submit();
     }
@@ -573,7 +608,16 @@ function render() {
     //console.log("floodTimer= "+floodTimer);
     //console.log("player y = "+player.y);
     //console.log(stopped);
- 
+    document.getElementById("runningScore").innerHTML = "Current score: " + Math.trunc(player.y);
+    if (eheheheh >= 0 && showThing) {
+        ctx.drawImage(document.querySelector("#otherThing"), 0, 600, 200, 200);
+        ctx.fillStyle="#FF0000";
+        ctx.textAlign = "start";
+        ctx.font = "italic bold 20px Impact";
+        for (var i = 0; i < textThing.length; i++) {
+            ctx.fillText(textThing[i], 200, 630 + 30 * i);
+        }
+    }
 };
 
 function stopRender() {

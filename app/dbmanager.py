@@ -72,7 +72,7 @@ def addScore(username: str, score: int):
 
     #if the user has the max number of scores and the new score beats
     #the lowest existing score, then replace it
-    if (len(scoresAsList2) >= 10 and score > int(lowestScore)): 
+    if (len(scoresAsList2) >= 10 and score > int(min(scoresAsList2))): 
         lowestScore = min(scoresAsList2)
         scoresAsList.remove(lowestScore)
         scoresAsList.append(str(score))
