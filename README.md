@@ -7,6 +7,7 @@
 
 Idea: Platformer with Physics
 "Create a platformer game using JavaScript and HTML Canvases as well as a simple physics engine for it (velocity, acceleration, collisions, ...)"
+https://github.com/stuy-softdev/notes-and-code20-21/blob/master/api_kb/411_on_DogCEO.md
 
 ## Launch Codes:
 1. Clone this repository: 
