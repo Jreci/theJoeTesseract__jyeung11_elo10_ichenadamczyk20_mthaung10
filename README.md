@@ -10,7 +10,7 @@ Idea: Platformer with Physics
 
 ## Launch Codes:
 1. Clone this repository: 
-2. `git clone https://github.com/ichenadamczyk20/joeCubed__ichenadamczyk20_elo10_mthaung10_jyeung11.git` or 
+2. `git clone https://github.com/Jreci/theJoeTesseract__jyeung11_elo10_ichenadamczyk20_mthaung10.git` or 
 `git clone git@github.com:Jreci/theJoeTesseract__jyeung11_elo10_ichenadamczyk20_mthaung10.git`
 3. Go to the folder containing the app: 
 `cd theJoeTesseract__jyeung11_elo10_ichenadamczyk20_mthaung10`
