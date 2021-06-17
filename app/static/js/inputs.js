@@ -99,6 +99,6 @@
     };
 
     //adding the event listeners
-    document.addEventListener("keydown", keydown);
-    document.addEventListener("keyup", keyup);
+    document.querySelector("canvas").addEventListener("keydown", keydown);
+    document.querySelector("canvas").addEventListener("keyup", keyup);
 }
