@@ -30,6 +30,5 @@ if __name__ == "__main__":
     createTables()
     #manager.addHighScore("DUPLICATE", 1)
     for i in range(10): 
-        from dbmanager import manager
-        manager.addHighScore("This place has not yet been taken!", i)
+        __import__("dbmanager").addHighScore("This place has not yet been taken!", i)
     
