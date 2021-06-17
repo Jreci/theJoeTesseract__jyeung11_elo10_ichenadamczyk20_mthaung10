@@ -1,4 +1,4 @@
-# theJoeTesseract
+# Pitiful Pro Physics Platformer by theJoeTesseract
 ## Roster:
 - Jessica Yeung (Project Manager)
 - Eric Lo
