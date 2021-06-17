@@ -187,5 +187,6 @@ ianC -- 2021-06-16 20:32
     - wrote java script (dog picture + dog sound + quote)
     - added e.preventDefault() to inputs
     - tested and fixed launchCodes
+    - updated devlog to include REST API, team member breakdowns
 
 --------------------------------------------------------------
