@@ -5,8 +5,10 @@
 - Ian Chen-Adamczyk
 - Michelle Thaung
 
-Idea: Platformer with Physics
-"Create a platformer game using JavaScript and HTML Canvases as well as a simple physics engine for it (velocity, acceleration, collisions, ...)"  
+## Description:
+A platformer with beautiful graphics and janky "physics" and some nifty other features ~~that contribute nothing to the gameplay.~~
+
+## API Documentation:
 https://github.com/stuy-softdev/notes-and-code20-21/blob/master/api_kb/411_on_DogCEO.md
 
 ## Launch Codes:
@@ -21,3 +23,5 @@ https://github.com/stuy-softdev/notes-and-code20-21/blob/master/api_kb/411_on_Do
 `python app/dbsetup.py`
 6. Run the python file: 
 `python app/__init__.py`
+
+## [Video Demo Here](google.com)
