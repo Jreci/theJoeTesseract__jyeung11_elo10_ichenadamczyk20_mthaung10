@@ -168,4 +168,4 @@ def checkNewScore(): #game ended, check if score should be added to hiscore tabl
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0') #for replit testing  
+    app.run() 
